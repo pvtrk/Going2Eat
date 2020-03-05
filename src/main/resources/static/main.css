@@ -1,0 +1,85 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    background-color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+    width:80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 100px;
+
+}
+
+#logo {
+    height: 150px;
+    text-align: center;
+    color: black;
+    margin-top: 20px;
+    font-size: 50px;
+    letter-spacing: 3px;
+    border-bottom: 1px solid black;
+}
+#menu {
+    position: fixed;
+    left: 0;
+    top: 170px;
+    background-color: #303030;
+    float: left;
+    min-height: calc(100vh - 250px);
+    text-align: center;
+    color:#ffffff;
+    padding: 10px;
+    width: 130px;
+    border: 1px solid black;
+}
+
+
+#content {
+    float: left;
+    width: 80%;
+    margin-left:110px;
+    min-height: calc(100vh - 250px);
+    /*width: calc(99% - 210px);
+    height: calc(98% - 100px);*/
+    text-align: center;
+    padding: 10px;
+}
+
+.option {
+    display: block;
+    text-decoration: none;
+    min-height: 50px;
+    font-size: 25px
+    padding: 10px;
+    border-bottom: 2px dotted grey;
+}
+
+.option:hover {
+    background-color: #000000;
+    cursor: pointer;
+}
+a:link {
+    color:white;
+    text-decoration: none;
+}
+a:visited {
+    color: white;
+    text-decoration: none;
+}
+#footer {
+    clear: both;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 15px;
+    border-top: 1px solid black;
+    height:100px;
+}

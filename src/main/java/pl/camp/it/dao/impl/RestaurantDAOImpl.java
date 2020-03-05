@@ -31,8 +31,20 @@ public class RestaurantDAOImpl implements IRestaurantDAO {
     }
 
     @Override
+    public List<Restaurant> getAllRestaurants() {
+        Session session = sessionFactory.openSession();
+        return session.createQuery("FROM trestaurant").list();
+    }
+
+    @Override
     public List<Restaurant> getRestaurantByUserId(int id) {
         Session session = sessionFactory.openSession();
         return session.createQuery("FROM trestaurant WHERE userId = " + id).list();
+    }
+
+    @Override
+    public Restaurant getRestaurantById(int id) {
+        Session session = sessionFactory.openSession();
+        return session.createQuery("FROM trestaurant WHERE id = " + id, Restaurant.class).uniqueResult();
     }
 }

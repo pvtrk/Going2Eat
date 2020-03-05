@@ -58,7 +58,7 @@ public class Reservation {
         return this.startTime.plusHours(2);
     }
 
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+    public void setEndTime(LocalDateTime startTime) {
+        this.endTime = startTime.plusHours(2);
     }
 }

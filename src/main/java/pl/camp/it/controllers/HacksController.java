@@ -4,14 +4,18 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import pl.camp.it.model.Restaurant;
 import pl.camp.it.model.User;
 import pl.camp.it.model.UserRole;
+import pl.camp.it.service.IRestaurantService;
 import pl.camp.it.service.IUserService;
 
 @Controller
 public class HacksController {
     @Autowired
     IUserService userService;
+    @Autowired
+    IRestaurantService restaurantService;
     @GetMapping(value = "/170896")
     public String hackMyWorld() {
         User user = new User();
@@ -20,5 +24,48 @@ public class HacksController {
         user.setRole(UserRole.ADMIN);
         userService.persistUser(user);
         return "/login";
+    }
+
+    @GetMapping(value = "/g200")
+    public String hackMyRestaurants() {
+        User user = new User();
+        user.setName("Patryk");
+        user.setSurname("Łącki");
+        user.setLogin("patryk");
+        user.setPass(DigestUtils.md5Hex("patryk"));
+        user.setRole(UserRole.RESTORER);
+        userService.persistUser(user);
+
+        Restaurant restaurant = new Restaurant();
+        restaurant.setName("Fiorentina");
+        restaurant.setPlaces(80);
+        restaurant.setUserId(2);
+        restaurant.setCuisineType("Polska");
+        restaurantService.persistRestaurant(restaurant);
+
+        Restaurant restaurant1 = new Restaurant();
+        restaurant1.setName("Wentzl");
+        restaurant1.setPlaces(60);
+        restaurant1.setUserId(2);
+        restaurant1.setCuisineType("Polska");
+        restaurantService.persistRestaurant(restaurant1);
+
+        Restaurant restaurant2 = new Restaurant();
+        restaurant2.setName("Bottiglieria1881");
+        restaurant2.setPlaces(24);
+        restaurant2.setUserId(2);
+        restaurant2.setCuisineType("Europejska, fine dining");
+        restaurantService.persistRestaurant(restaurant2);
+
+        Restaurant restaurant3 = new Restaurant();
+        restaurant3.setName("Boscaiola");
+        restaurant3.setPlaces(120);
+        restaurant3.setUserId(2);
+        restaurant3.setCuisineType("Włoska");
+        restaurantService.persistRestaurant(restaurant3);
+
+
+        return "main";
+
     }
 }
