@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.camp.it.model.Reservation;
+import pl.camp.it.model.ReservationStatus;
 import pl.camp.it.service.IReservationService;
 import pl.camp.it.service.IRestaurantService;
 import pl.camp.it.service.IUserService;
@@ -15,6 +16,7 @@ import pl.camp.it.session.SessionObject;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 public class ReservationController {
@@ -42,11 +44,29 @@ public class ReservationController {
             Reservation reservation = new Reservation();
             reservation.setUserId(sessionObject.getUser().getId());
             reservation.setRestaurantId(id);
+            reservation.setRestaurantName(restaurantService.getRestaurantById(id).getName());
             reservation.setGuestsQuantity(guestsNumber);
+            reservation.setReservationStatus(ReservationStatus.ACTIVE);
             reservation.setStartTime(LocalDateTime.parse(localDateTime, formatter));
             reservation.setEndTime(LocalDateTime.parse(localDateTime, formatter));
             reservationService.persistReservation(reservation);
         }
         return "reservation";
+    }
+
+    @GetMapping(value="/myReservations")
+    public String showUsersReservations(Model model) {
+        sessionObject.setUser(userService.getUserById(2)); // MA POTRZEBY SPRAWDZANIA DZAIALNIA
+        List<Reservation> reservationList = reservationService.getActiveReservationsForUser(sessionObject.getUser().getId());
+        model.addAttribute("reservations" , reservationList);
+        return "myReservations";
+    }
+
+    @GetMapping(value="/cancel/{id}")
+    public String cancelReservation(@PathVariable int id) {
+        Reservation reservation = this.reservationService.getReservationById(id);
+        reservation.setReservationStatus(ReservationStatus.CANCELED);
+        this.reservationService.persistReservation(reservation);
+        return "redirect:/myReservations";
     }
 }

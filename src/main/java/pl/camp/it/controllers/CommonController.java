@@ -20,25 +20,13 @@ public class CommonController {
     public String showMainPage() {
         return "main";
     }
-
+    @GetMapping(value="/")
+    public String redirectToMain() {
+        return "redirect:/main";
+    }
     @GetMapping(value = "/reservation")
     public String testReservation() {
         return "reservation";
     }
-    /*@GetMapping(value = "/makeReservation")
-    public String testMaking(@RequestParam String localDateTime, @RequestParam int guestsNumber) {
-        System.out.println(localDateTime);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime reservationTime = LocalDateTime.parse(localDateTime, formatter);
-        Reservation reservation = new Reservation();
-        reservation.setGuestsQuantity(guestsNumber);
-        reservation.setRestaurantId(1);
-        reservation.setUserId(2);
-        reservation.setStartTime(reservationTime);
-        reservation.setEndTime(reservationTime);
-        this.reservationService.persistReservation(reservation);
-        System.out.println(this.reservationService.getBookedPlaces(1, reservationTime));
 
-        return "main";
-    } */
 }

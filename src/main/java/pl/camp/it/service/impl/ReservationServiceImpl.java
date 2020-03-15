@@ -26,6 +26,11 @@ public class ReservationServiceImpl implements IReservationService {
     }
 
     @Override
+    public Reservation getReservationById(int id) {
+        return this.reservationDAO.getReservationById(id);
+    }
+
+    @Override
     public List<Reservation> getReservationsByRestaurantId(int id) {
         return this.reservationDAO.getReservationsByRestaurantId(id);
     }
@@ -43,5 +48,20 @@ public class ReservationServiceImpl implements IReservationService {
         }
 
         return guestNumber;
+    }
+
+    @Override
+    public List<Reservation> getReservationsByUserId(int id) {
+        return this.reservationDAO.getReservationsByUserId(id);
+    }
+
+    @Override
+    public List<Reservation> getActiveReservationsForUser(int id) {
+        return this.reservationDAO.getActiveReservationsForUser(id);
+    }
+
+    @Override
+    public List<Reservation> getAllReservations() {
+        return this.reservationDAO.getAllReservations();
     }
 }

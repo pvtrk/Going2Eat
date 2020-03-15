@@ -6,7 +6,10 @@ import java.util.List;
 
 public interface IReservationDAO {
     void persistReservation (Reservation reservation);
+    Reservation getReservationById(int id);
+    List<Reservation> getAllReservations();
     List<Reservation> getReservationsByUserId(int id);
     List<Reservation> getReservationsByRestaurantId(int id);
+    List<Reservation> getActiveReservationsForUser(int id);
 
 }

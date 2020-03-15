@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Going2Eat</title>
-    <link rel="stylesheet" type="text/css" href="main.css">
-    <link rel="stylesheet" type="text/css" href="restaurant.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/restaurant.css}">
 </head>
 <body>
 <div id="container">
@@ -22,6 +22,12 @@
                 <p>Kuchnia: </p><p th:text="${restaurant.cuisineType}"></p>
                 <form th:action="${'/makeReservation/' + restaurant.id}">
                     <input type="submit" value="Zarezerwuj">
+                </form>
+                <form th:action="${'/addToFavourite/' + restaurant.id}">
+                    <input type="submit" value="Dodaj do ulubionych">
+                </form>
+                <form th:action="${'/moreinfo/' + restaurant.id}">
+                    <input type="submit" value="Więcej">
                 </form>
             </div>
         </th:block>

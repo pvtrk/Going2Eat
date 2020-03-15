@@ -1,9 +1,6 @@
 package pl.camp.it.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity(name="treservation")
@@ -13,7 +10,10 @@ public class Reservation {
     private int id;
     private int userId;
     private int restaurantId;
+    private String restaurantName;
     private int guestsQuantity;
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus reservationStatus;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
@@ -32,6 +32,14 @@ public class Reservation {
 
     public int getRestaurantId() {
         return restaurantId;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
     public void setRestaurantId(int restaurantId) {
@@ -60,5 +68,13 @@ public class Reservation {
 
     public void setEndTime(LocalDateTime startTime) {
         this.endTime = startTime.plusHours(2);
+    }
+
+    public ReservationStatus getReservationStatus() {
+        return reservationStatus;
+    }
+
+    public void setReservationStatus(ReservationStatus reservationStatus) {
+        this.reservationStatus = reservationStatus;
     }
 }

@@ -10,8 +10,10 @@ import java.util.List;
 
 public interface IReservationService {
     void persistReservation(Reservation reservation);
+    Reservation getReservationById(int id);
     List<Reservation> getReservationsByRestaurantId(int id);
     int getBookedPlaces(int id, LocalDateTime time);
-
-
+    List<Reservation> getReservationsByUserId(int id);
+    List<Reservation> getActiveReservationsForUser(int id);
+    List<Reservation> getAllReservations();
 }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Going2Eat</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/restaurant.css}">
+</head>
+<body>
+<div id="container">
+
+    <div id="logo">
+
+    </div>
+
+    <div th:replace="adminFragments.html :: menu"></div>
+
+    <div id="content">
+        <th:block th:each="reservation : ${reservations}">
+            <div class="reservation">
+                <p>Restauracja: </p><p th:text="${reservation.restaurantName}"></p>
+                <p>Liczba gości: </p><p th:text="${reservation.guestsQuantity}"></p>
+                <p>ID użytkownika: </p><a style="color:black" th:href="${'/showUser/' + reservation.userId}"><p th:text="${reservation.userId}"></p></a>
+            </div>
+        </th:block>
+    </div>
+
+</div>
+<div th:replace="footer.html :: footer"></div>
+</body>
+</html>

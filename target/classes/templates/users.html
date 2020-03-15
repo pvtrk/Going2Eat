@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Going2Eat</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
+</head>
+<body>
+<div id="container">
+
+    <div id="logo">
+
+    </div>
+
+    <div th:replace="adminFragments.html :: menu"></div>
+
+    <div id="content">
+        <form method="post">
+            <th:block th:each="user : ${users}">
+                <div class="user">
+                    <p>Imie: </p><p th:text="${user.name}"></p>
+                    <p>Nazwisko: </p><p th:text="${user.surname}"></p>
+                    <p>ID usera: </p><p th:text="${user.id}"></p>
+                    <p th:if="${user.role == T(pl.camp.it.model.UserRole).RESTORER}"><a style="color:black;" th:href="${'/userRestaurants/' + user.id}">Restauracje</a></p>
+                </div>
+            </th:block>
+        </form>
+    </div>
+
+</div>
+<div th:replace="footer.html :: footer"></div>
+</body>
+</html>

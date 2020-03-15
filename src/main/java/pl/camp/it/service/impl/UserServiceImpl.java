@@ -6,6 +6,8 @@ import pl.camp.it.dao.IUserDAO;
 import pl.camp.it.model.User;
 import pl.camp.it.service.IUserService;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements IUserService {
     @Autowired
@@ -18,6 +20,11 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User getUserById(int id) {
         return this.userDAO.getUserById(id);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return this.userDAO.getAllUsers();
     }
 
 }

@@ -31,6 +31,18 @@ public class ReservationDAOImpl implements IReservationDAO {
     }
 
     @Override
+    public Reservation getReservationById(int id) {
+        Session session = sessionFactory.openSession();
+        return session.createQuery("FROM treservation WHERE id = " + id, Reservation.class).uniqueResult();
+    }
+
+    @Override
+    public List<Reservation> getAllReservations() {
+        Session session = sessionFactory.openSession();
+        return session.createQuery("FROM treservation").list();
+    }
+
+    @Override
     public List<Reservation> getReservationsByUserId(int id) {
         Session session = sessionFactory.openSession();
         return session.createQuery("FROM treservation WHERE userId = " + id).list();
@@ -40,5 +52,11 @@ public class ReservationDAOImpl implements IReservationDAO {
     public List<Reservation> getReservationsByRestaurantId(int id) {
         Session session = sessionFactory.openSession();
         return session.createQuery("FROM treservation WHERE restaurantId = " + id).list();
+    }
+
+    @Override
+    public List<Reservation> getActiveReservationsForUser(int id) {
+        Session session = sessionFactory.openSession();
+        return session.createQuery("FROM treservation WHERE userId = " + id + " AND reservationStatus = " + "'ACTIVE'").list();
     }
 }

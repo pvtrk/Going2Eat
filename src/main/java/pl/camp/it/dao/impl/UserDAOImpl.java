@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.camp.it.dao.IUserDAO;
 import pl.camp.it.model.User;
+
+import java.util.List;
+
 @Repository
 public class UserDAOImpl implements IUserDAO {
     @Autowired
@@ -25,6 +28,12 @@ public class UserDAOImpl implements IUserDAO {
                 tx.rollback();
             }
         }
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        Session session = sessionFactory.openSession();
+        return session.createQuery("FROM tuser").list();
     }
 
     @Override

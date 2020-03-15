@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Going2Eat</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/restaurant.css}">
+</head>
+<body>
+<div id="container">
+
+    <div id="logo">
+
+    </div>
+
+    <div th:replace="adminFragments.html :: menu"></div>
+
+    <div id="content">
+        <th:block th:each="restaurant : ${restaurants}">
+            <div class="restaurant">
+                <p th:text="${restaurant.name}"></p>
+                <p>Kuchnia: </p><p th:text="${restaurant.cuisineType}"></p>
+                <p>ID użytkownika: </p><a style="color:black;" th:href="${'/showUser/' + restaurant.userId}"><p th:text="${restaurant.userId}"></p></a>
+                <p th:text="${restaurant.restaurantStatus}"></p>
+                <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
+                      th:action="${'/block/' + restaurant.id}">
+                    <input type="submit" value="Usuń">
+                </form>
+                <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).OFF}"
+                      th:action="${'/unblock/' + restaurant.id}">
+                    <input type="submit" value="Odblokuj">
+                </form>
+            </div>
+        </th:block>
+    </div>
+
+</div>
+<div th:replace="footer.html :: footer"></div>
+</body>
+</html>

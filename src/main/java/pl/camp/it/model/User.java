@@ -1,9 +1,6 @@
 package pl.camp.it.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name="tuser")
 public class User {
@@ -14,6 +11,7 @@ public class User {
     private String surname;
     private String login;
     private String pass;
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     public int getId() {

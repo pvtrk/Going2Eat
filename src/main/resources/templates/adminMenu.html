@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Going2Eat</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+<div id="container">
+
+    <div id="logo">
+
+    </div>
+
+    <div th:replace="adminFragments.html :: menu"></div>
+
+    <div id="content">
+        Tutaj będzie content mojej aplikacji.
+    </div>
+
+</div>
+<div th:replace="footer.html :: footer"></div>
+</body>
+</html>

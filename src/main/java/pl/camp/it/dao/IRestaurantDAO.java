@@ -7,6 +7,9 @@ import java.util.List;
 public interface IRestaurantDAO {
     void persistRestaurant(Restaurant restaurant);
     List<Restaurant> getAllRestaurants();
-    List<Restaurant> getRestaurantByUserId(int id);
+    List<Restaurant> getRestaurantsByUserId(int id);
     Restaurant getRestaurantById(int id);
+    void addFavouriteRestaurant(int userId, int restaurantId);
+    List<Restaurant> getFavouriteRestaurants(int userId);
+    List<Restaurant> getActiveRestaurants();
 }

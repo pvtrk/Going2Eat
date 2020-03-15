@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Going2Eat</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
+</head>
+<body>
+<div id="container">
+
+    <div id="logo">
+
+    </div>
+
+    <div th:replace="adminFragments.html :: menu"></div>
+
+    <div id="content">
+        <form method="post">
+            <th:block>
+                <div class="user">
+                    <p>Imie: </p><p th:text="${user.name}"></p>
+                    <p>Nazwisko: </p><p th:text="${user.surname}"></p>
+                    <p>ID usera: </p><p th:text="${user.id}"></p>
+                    <p th:if="${restaurants}">Restauracje: </p>
+                    <th:block th:if="${restaurant.id}" th:each="restaurant :${restaurants}">
+                        <div class="restaurant">
+                            <p>Nazwa restauracji: </p><p th:text="${restaurant.name}"></p>
+                            <p>Kuchnia: </p><p th:text="${restaurant.cuisineType}"></p>
+                            <p>Liczba miejsc: </p><p th:text="${restaurant.places}"></p>
+                            <p></p>
+                        </div>
+                    </th:block>
+                </div>
+            </th:block>
+        </form>
+    </div>
+
+</div>
+<div th:replace="footer.html :: footer"></div>
+</body>
+</html>
