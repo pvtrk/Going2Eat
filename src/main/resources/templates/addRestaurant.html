@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Going2Eat</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<div th:replace="restorerFragments.html :: menu"></div>
+
+<div class="container">
+
+    <div th:replace="logoFragment.html :: logo"></div>
+
+    <div id="content">
+        <form method="post">
+        <div class="form-group">
+            <label for="formRestaurantNameInput">Nazwa restauracji</label>
+            <input type="text" class="form-control" id="formRestaurantNameInput" placeholder="Nazwa restauracji" th:field="*{restaurant.name}">
+        </div>
+        <div class="form-group">
+            <label for="formDescriptionInput">Opis restauracji</label>
+            <input type="text" class="form-control" id="formDescriptionInput" placeholder="Nazwa restauracji" th:field="*{restaurant.name}">
+        </div>
+        <div class="form-group">
+            <label for="cuisineTypeInput">Rodzaj kuchni</label>
+            <input type="text" class="form-control" id="cuisineTypeInput" placeholder="Rodzaj kuchni" th:field="*{restaurant.cuisineType}">
+        </div>
+        <div class="form-group">
+            <label for="placesQuantityInput">Ilość miejsc</label>
+            <input type="number" class="form-control" id="placesQuantityInput" placeholder="Liczba miejsc" th:field="*{restaurant.places}">
+        </div>
+            <input type="submit" class="btn btn-primary" value="Zatwierdź">
+        </form>
+    </div>
+
+</div>
+<div th:replace="footer.html :: footer"></div>
+</body>
+</html>

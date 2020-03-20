@@ -14,6 +14,7 @@ public class Reservation {
     private int guestsQuantity;
     @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
+    private String comments;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
@@ -76,5 +77,13 @@ public class Reservation {
 
     public void setReservationStatus(ReservationStatus reservationStatus) {
         this.reservationStatus = reservationStatus;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

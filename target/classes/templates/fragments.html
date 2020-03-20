@@ -3,13 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Going2Eat</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/tytul.css" rel="stylesheet">
 </head>
 <body>
-<div id="menu" th:fragment="menu">
-    <a href="/restaurants"><div class="option">Restauracje</div></a>
-    <a href="/myFavourite"><div class="option">Moje ulubione</div></a>
-    <a href="/myReservations"><div class="option">Moje rezerwacje</div></a>
-    <a href="/"><div class="option">Wyloguj</div></a>
-</div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="menu">
+        <a class="navbar-brand" href="/main">Going2Eat</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/promotions">promocje</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/restaurants">restauracje</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/myFavourite">moje ulubione</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/myReservations">moje rezerwacje</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/logout">wyloguj</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
 </body>
 </html>

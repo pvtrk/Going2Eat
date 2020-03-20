@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.camp.it.dao.IReservationDAO;
 import pl.camp.it.model.Reservation;
 import pl.camp.it.model.Restaurant;
+import pl.camp.it.model.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,4 +17,5 @@ public interface IReservationService {
     List<Reservation> getReservationsByUserId(int id);
     List<Reservation> getActiveReservationsForUser(int id);
     List<Reservation> getAllReservations();
+    List<Reservation> getReservationsForRestorer(User restorer);
 }

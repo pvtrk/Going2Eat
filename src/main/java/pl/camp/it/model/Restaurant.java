@@ -2,6 +2,8 @@ package pl.camp.it.model;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity(name="trestaurant")
@@ -14,14 +16,17 @@ public class Restaurant {
     private String description;
     private int places;
     private String cuisineType;
+    private String city;
+    private String adress;
     @Enumerated(EnumType.STRING)
     private RestaurantStatus restaurantStatus;
+    @OneToMany(mappedBy = "restaurant")
+    private List<Promotion> promotions;
 
 
     public int getId() {
         return id;
     }
-
 
     public int getUserId() {
         return userId;
@@ -63,11 +68,36 @@ public class Restaurant {
         this.cuisineType = cuisineType;
     }
 
+
     public RestaurantStatus getRestaurantStatus() {
         return restaurantStatus;
     }
 
     public void setRestaurantStatus(RestaurantStatus restaurantStatus) {
         this.restaurantStatus = restaurantStatus;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAdress() {
+        return adress;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
+
+    public List<Promotion> getPromotions() {
+        return promotions;
+    }
+
+    public void setPromotions(List<Promotion> promotions) {
+        this.promotions = promotions;
     }
 }

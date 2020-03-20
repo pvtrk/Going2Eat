@@ -8,18 +8,21 @@
     <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
 </head>
 <body>
-<div id="container">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <div id="logo">
+<div th:replace="fragments.html :: menu"></div>
 
-    </div>
+<div class="container">
 
-    <div th:replace="fragments.html :: menu"></div>
+    <div th:replace="logoFragment.html :: logo"></div>
 
     <div id="content">
         <form method="post">
         <div th:replace="datepicker.html :: datepicker"></div>
         <input type="number" placeholder="Ilość gości" name="guestsNumber">
+        <input type="text" class="textarea" placeholder="Uwagi" name="comments">
         <input type="submit" value="Zarezerwuj">
         </form>
     </div>

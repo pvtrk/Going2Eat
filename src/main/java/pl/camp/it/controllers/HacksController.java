@@ -4,12 +4,12 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import pl.camp.it.model.Restaurant;
-import pl.camp.it.model.RestaurantStatus;
-import pl.camp.it.model.User;
-import pl.camp.it.model.UserRole;
+import pl.camp.it.model.*;
+import pl.camp.it.service.IPromotionService;
 import pl.camp.it.service.IRestaurantService;
 import pl.camp.it.service.IUserService;
+
+import java.time.LocalDate;
 
 @Controller
 public class HacksController {
@@ -17,6 +17,8 @@ public class HacksController {
     IUserService userService;
     @Autowired
     IRestaurantService restaurantService;
+    @Autowired
+    IPromotionService promotionService;
     @GetMapping(value = "/170896")
     public String hackMyWorld() {
         User user = new User();
@@ -47,6 +49,8 @@ public class HacksController {
         restaurant.setPlaces(80);
         restaurant.setUserId(2);
         restaurant.setCuisineType("Polska");
+        restaurant.setCity("Kraków");
+        restaurant.setAdress("ul. Grodzka 2");
         restaurant.setRestaurantStatus(RestaurantStatus.ACTIVE);
         restaurantService.persistRestaurant(restaurant);
 
@@ -56,6 +60,8 @@ public class HacksController {
         restaurant1.setPlaces(60);
         restaurant1.setUserId(2);
         restaurant1.setCuisineType("Polska");
+        restaurant1.setCity("Kraków");
+        restaurant1.setAdress("Rynek Główny 9");
         restaurant1.setRestaurantStatus(RestaurantStatus.ACTIVE);
         restaurantService.persistRestaurant(restaurant1);
 
@@ -65,6 +71,8 @@ public class HacksController {
         restaurant2.setPlaces(24);
         restaurant2.setUserId(2);
         restaurant2.setCuisineType("Europejska, fine dining");
+        restaurant2.setCity("Kraków");
+        restaurant2.setAdress("ul. Bocheńska 5");
         restaurant2.setRestaurantStatus(RestaurantStatus.ACTIVE);
         restaurantService.persistRestaurant(restaurant2);
 
@@ -74,6 +82,8 @@ public class HacksController {
         restaurant3.setPlaces(120);
         restaurant3.setUserId(2);
         restaurant3.setCuisineType("Włoska");
+        restaurant3.setCity("Kraków");
+        restaurant3.setAdress("ul. Szpitalna 42");
         restaurant3.setRestaurantStatus(RestaurantStatus.ACTIVE);
         restaurantService.persistRestaurant(restaurant3);
 
@@ -81,4 +91,31 @@ public class HacksController {
         return "main";
 
     }
+    @GetMapping(value="/tralala")
+    public String makeNormalUser() {
+        User user = new User();
+        user.setName("Michał");
+        user.setSurname("Michalkiewicz");
+        user.setRole(UserRole.USER);
+        user.setLogin("user");
+        user.setPass("user");
+        this.userService.persistUser(user);
+        return "redirect:/main";
+    }
+
+    @GetMapping(value="/rampampam")
+    public String hackPromotion(){
+        LocalDate date = LocalDate.now();
+        Promotion promotion = new Promotion();
+        promotion.setRestaurant(restaurantService.getRestaurantById(1));
+        promotion.setDescription("Dwa kieliszki prosecco w cenie jednego");
+        promotion.setPrice(10);
+        promotion.setStartDate(date);
+        promotion.setEndDate(date.plusWeeks(1));
+        promotion.setStatus(PromotionStatus.ACTIVE);
+        promotion.setDistinction(true);
+        this.promotionService.persistPromotion(promotion);
+        return "main";
+    }
+
 }

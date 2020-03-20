@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Going2Eat</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="datepicker.css">
+</head>
+
+<body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<div id="datetimepicker" th:fragment="promotionsDatepicker">
+    <div class="datepicker1">
+        <input type="text" id="datepicker" class="form-control" name="date1">
+    </div>
+</div>
+    <div id="datetimepicker2" th:fragment="promotionsDatepicker2">
+        <div class="datepicker1">
+            <input type="text" id="datepicker2" class="form-control" name="date2">
+        </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+    <script>
+
+    jQuery.datetimepicker.setLocale('pl')
+    $('#datepicker, #datepicker2').datetimepicker({
+        datepicker: true,
+        timepicker: false,
+        format: 'Y-m-d',
+        minDate: moment(),
+        hours12: false,
+        todayHighlight: true,
+        yearStart: 2020,
+        mask: true,
+        lang: 'pl',
+        i18n: {
+            month: ['Styczen', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpien', 'Wrzesien', 'Październik', 'Listopad',
+            'Grudzien'],
+            dayOfWeek: ['Poniedzialek', 'Wtorek', 'Sroda', 'Czwartek', 'Piatek', 'Sobota', 'Niedziela']
+        }
+    })
+</script>
+</div>
+</body>
+
+</html>

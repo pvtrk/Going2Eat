@@ -8,9 +8,11 @@ import pl.camp.it.dao.IReservationDAO;
 import pl.camp.it.dao.IRestaurantDAO;
 import pl.camp.it.model.Reservation;
 import pl.camp.it.model.Restaurant;
+import pl.camp.it.model.User;
 import pl.camp.it.service.IReservationService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -63,5 +65,15 @@ public class ReservationServiceImpl implements IReservationService {
     @Override
     public List<Reservation> getAllReservations() {
         return this.reservationDAO.getAllReservations();
+    }
+
+    @Override
+    public List<Reservation> getReservationsForRestorer(User restorer) {
+        List<Restaurant> restaurants = this.restaurantDAO.getRestaurantsByUserId(restorer.getId());
+        List<Reservation> result = new ArrayList<>();
+        for(Restaurant restaurant : restaurants) {
+            result.addAll(this.reservationDAO.getReservationsByRestaurantId(restaurant.getId()));
+        }
+        return result;
     }
 }

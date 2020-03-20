@@ -3,29 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Going2Eat</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/restaurant.css}">
 </head>
 <body>
-<div id="container">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <div id="logo">
+<div th:replace="adminFragments.html :: menu"></div>
 
-    </div>
+    <div class="container">
 
-    <div th:replace="adminFragments.html :: menu"></div>
+        <div th:replace="logoFragment.html ::logo"></div>
 
-    <div id="content">
-        <th:block th:each="reservation : ${reservations}">
-            <div class="reservation">
-                <p>Restauracja: </p><p th:text="${reservation.restaurantName}"></p>
-                <p>Liczba gości: </p><p th:text="${reservation.guestsQuantity}"></p>
-                <p>ID użytkownika: </p><a style="color:black" th:href="${'/showUser/' + reservation.userId}"><p th:text="${reservation.userId}"></p></a>
+        <div id="content">
+
+            <div id="accordion">
+
+                <div class="card" th:each="reservation : ${reservations}">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#collapseOne" th:text="${reservation.restaurantName}" style="color:#000;">
+                        </a>
+                    </div>
+                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                        <div class="card-body">
+                            <span>Data: </span><span th:text="${reservation.startTime}"></span><br>
+                            <span>Liczba gości: </span><span th:text="${reservation.guestsQuantity}"></span><br>
+                            <span>ID użytkownika: </span><a style="color:black" th:href="${'/showUser/' + reservation.userId}"><span th:text="${reservation.userId}"></span></a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </th:block>
-    </div>
+        </div>
 
-</div>
-<div th:replace="footer.html :: footer"></div>
+    </div>
+    <div th:replace="footer.html :: footer"></div>
 </body>
 </html>

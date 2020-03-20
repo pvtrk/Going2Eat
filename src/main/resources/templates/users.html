@@ -4,29 +4,40 @@
     <meta charset="UTF-8">
     <title>Going2Eat</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
 </head>
 <body>
-<div id="container">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <div id="logo">
+<div th:replace="adminFragments.html :: menu"></div>
 
-    </div>
+<div class="container">
 
-    <div th:replace="adminFragments.html :: menu"></div>
+    <div th:replace="logoFragment.html :: logo"></div>
 
     <div id="content">
-        <form method="post">
-            <th:block th:each="user : ${users}">
-                <div class="user">
-                    <p>Imie: </p><p th:text="${user.name}"></p>
-                    <p>Nazwisko: </p><p th:text="${user.surname}"></p>
-                    <p>ID usera: </p><p th:text="${user.id}"></p>
-                    <p th:if="${user.role == T(pl.camp.it.model.UserRole).RESTORER}"><a style="color:black;" th:href="${'/userRestaurants/' + user.id}">Restauracje</a></p>
+
+        <div id="accordion">
+
+            <div class="card" th:each="user : ${users}">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#collapseOne" th:text="${user.id}" style="color:#000;">
+                    </a>
                 </div>
-            </th:block>
-        </form>
+                <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                    <div class="card-body">
+                        <span>Imie: </span><span th:text="${user.name}"></span><br>
+                        <span>Nazwisko: </span><span th:text="${user.surname}"></span></a><br>
+                        <span>Id: </span><span th:text="${user.id}"></span>
+
+                        <p th:if="${user.role == T(pl.camp.it.model.UserRole).RESTORER}"><a style="color:black;" class="btn btn-primary" th:href="${'/userRestaurants/' + user.id}">Restauracje</a></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

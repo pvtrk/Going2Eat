@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Going2Eat</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
-<div id="container">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <div id="logo">
+<div th:replace="adminFragments.html :: menu"></div>
 
-    </div>
+<div class="container">
 
-    <div th:replace="adminFragments.html :: menu"></div>
+    <div th:replace="logoFragment.html :: logo"></div>
 
-    <div id="content">
-        Tutaj będzie content mojej aplikacji.
-    </div>
 
 </div>
 <div th:replace="footer.html :: footer"></div>

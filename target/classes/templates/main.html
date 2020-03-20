@@ -3,22 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Going2Eat</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
-<div id="container">
-
-    <div id="logo">
-
-    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <div th:replace="fragments.html :: menu"></div>
 
-    <div id="content">
-        Tutaj będzie content mojej aplikacji.
+    <div class="container" id="wrapper">
+
+        <div th:replace="logoFragment.html :: logo"></div>
+
+
+        <div id="content">
+            <div th:each="promotion : ${promotions}">
+            <div class="jumbotron" th:if="${promotion.distinction}">
+                <h3 class="display-4" th:text="${promotion.restaurant.name}"></h3>
+                <p class="lead" th:text="${promotion.description}"></p>
+                <span th:text="${promotion.price}"></span><span>PLN</span>
+                <hr class="my-4">
+                <a class="btn btn-primary btn-lg" th:href="${'/makeReservation/' + promotion.restaurant.id}" role="button">Zarezerwuj teraz!</a>
+            </div>
+            </div>
+
+
+        </div>
+
+
+
     </div>
 
-</div>
-<div th:replace="footer.html :: footer"></div>
+    <div id="footer" th:replace="footer.html :: footer"></div>
+
 </body>
 </html>

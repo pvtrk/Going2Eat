@@ -5,17 +5,7 @@ html {
 body {
     background-color: #ffffff;
     font-family: 'Roboto', sans-serif;
-    min-height: 100%;
-    margin: 0;
     padding: 0;
-}
-
-#container {
-    width:80%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 100px;
-
 }
 
 #logo {
@@ -41,18 +31,6 @@ body {
     border: 1px solid black;
 }
 
-
-#content {
-    float: left;
-    width: 80%;
-    margin-left:110px;
-    min-height: calc(100vh - 250px);
-    /*width: calc(99% - 210px);
-    height: calc(98% - 100px);*/
-    text-align: center;
-    padding: 10px;
-}
-
 .option {
     display: block;
     text-decoration: none;
@@ -74,14 +52,18 @@ a:visited {
     color: white;
     text-decoration: none;
 }
-#footer {
-    clear: both;
-    max-width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 15px;
-    border-top: 1px solid black;
-    height:100px;
+.page-footer {
+  color: #b3b3b3;
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  height: 60px;
+  width: 100%;
+}
+
+#content {
+    overflow:auto;
+    padding-bottom:152px;
 }
 
 .user {
@@ -98,3 +80,9 @@ a:visited {
     border-bottom: 1px solid black;
     float: left;
 }
+
+#cytat {
+    text-align: center;
+}
+
+

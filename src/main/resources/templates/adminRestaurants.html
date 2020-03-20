@@ -3,35 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Going2Eat</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/restaurant.css}">
 </head>
 <body>
-<div id="container">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <div id="logo">
+<div th:replace="adminFragments.html :: menu"></div>
 
-    </div>
+<div class="container">
 
-    <div th:replace="adminFragments.html :: menu"></div>
+    <div th:replace="logoFragment.html ::logo"></div>
 
     <div id="content">
-        <th:block th:each="restaurant : ${restaurants}">
-            <div class="restaurant">
-                <p th:text="${restaurant.name}"></p>
-                <p>Kuchnia: </p><p th:text="${restaurant.cuisineType}"></p>
-                <p>ID użytkownika: </p><a style="color:black;" th:href="${'/showUser/' + restaurant.userId}"><p th:text="${restaurant.userId}"></p></a>
-                <p th:text="${restaurant.restaurantStatus}"></p>
-                <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
-                      th:action="${'/block/' + restaurant.id}">
-                    <input type="submit" value="Usuń">
-                </form>
-                <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).OFF}"
-                      th:action="${'/unblock/' + restaurant.id}">
-                    <input type="submit" value="Odblokuj">
-                </form>
+        <div id="accordion">
+
+            <div class="card" th:each="restaurant : ${restaurants}">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#collapseOne" th:text="${restaurant.name}" style="color:#000;">
+                    </a>
+                </div>
+                <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                    <div class="card-body">
+                        <span>Kuchnia: </span><span th:text="${restaurant.cuisineType}"></span><br>
+                        <span>ID użytkownika: </span><a style="color:black;" th:href="${'/showUser/' + restaurant.userId}"><span th:text="${restaurant.userId}"></span></a><br>
+                        <span th:text="${restaurant.restaurantStatus}"></span>
+
+                        <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
+                              th:action="${'/block/' + restaurant.id}">
+                            <input type="submit" class="btn btn-danger" value="Usuń">
+                        </form>
+
+                        <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).OFF}"
+                              th:action="${'/unblock/' + restaurant.id}">
+                            <input type="submit" class="btn btn-success" value="Odblokuj">
+                        </form>
+                    </div>
+                </div>
             </div>
-        </th:block>
+        </div>
+
     </div>
 
 </div>
