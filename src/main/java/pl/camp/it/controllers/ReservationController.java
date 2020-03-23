@@ -1,5 +1,7 @@
 package pl.camp.it.controllers;
 
+import jdk.nashorn.internal.ir.Block;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.camp.it.model.Blockade;
 import pl.camp.it.model.Reservation;
 import pl.camp.it.model.ReservationStatus;
+import pl.camp.it.model.Restaurant;
 import pl.camp.it.service.IReservationService;
 import pl.camp.it.service.IRestaurantService;
 import pl.camp.it.service.IUserService;
@@ -39,20 +43,15 @@ public class ReservationController {
     public String submitReservation(@PathVariable int id, @RequestParam String localDateTime,
                                     @RequestParam int guestsNumber, @RequestParam String comments, Model model) {
         sessionObject.setUser(userService.getUserById(1));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        int freePlaces = (restaurantService.getRestaurantById(id).getPlaces()) - (reservationService.getBookedPlaces(id, LocalDateTime.parse(localDateTime, formatter)));
+        /*DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        int freePlaces = (restaurantService.getRestaurantById(id).getPlaces()) -
+                (reservationService.getBookedPlaces(id, LocalDateTime.parse(localDateTime, formatter)));
         if (freePlaces > guestsNumber) {
-            Reservation reservation = new Reservation();
-            reservation.setUserId(sessionObject.getUser().getId());
-            reservation.setRestaurantId(id);
-            reservation.setRestaurantName(restaurantService.getRestaurantById(id).getName());
-            reservation.setGuestsQuantity(guestsNumber);
-            reservation.setReservationStatus(ReservationStatus.WAITING);
-            reservation.setComments(comments);
-            reservation.setStartTime(LocalDateTime.parse(localDateTime, formatter));
-            reservation.setEndTime(LocalDateTime.parse(localDateTime, formatter).plusHours(2));
-            reservationService.persistReservation(reservation);
-        }
+            this.reservationService.createReservation(this.restaurantService.getRestaurantById(id),
+                    guestsNumber, comments, localDateTime);
+        }*/
+        Restaurant restaurant = this.restaurantService.getRestaurantById(id);
+        this.reservationService.doComplexReservationAction(restaurant, guestsNumber, comments, localDateTime);
         return "reservation";
     }
 
@@ -96,4 +95,6 @@ public class ReservationController {
         this.reservationService.persistReservation(reservation);
         return "restorerReservations";
     }
+
+
 }

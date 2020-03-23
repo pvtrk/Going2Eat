@@ -14,10 +14,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <div id="datepicker" th:fragment="datepicker">
-<div class="datepicker1">
+<div class="datepicker1" >
     <h5>Wybierz datę rezerwacji</h5>
     <input type="text" id="picker" class="form-control" name="localDateTime">
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -28,7 +29,7 @@
     var date = new Date();
     var now = new Date(date.getYear(), date.getMonth(), date.getDay());
     jQuery.datetimepicker.setLocale('pl')
-    $('#picker').datetimepicker({
+    $('#picker, #datepicker, #datepicker2').datetimepicker({
         timepicker: true,
         datepicker: true,
         format: 'Y-m-d H:i', // formatDate
@@ -42,12 +43,22 @@
         mask: true,
         lang: 'pl',
         i18n: {
-            month: ['Styczen', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpien', 'Wrzesien', 'Październik', 'Listopad',
+            month: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpien', 'Wrzesien', 'Październik', 'Listopad',
             'Grudzien'],
             dayOfWeek: ['Poniedzialek', 'Wtorek', 'Sroda', 'Czwartek', 'Piatek', 'Sobota', 'Niedziela']
         }
     })
 </script>
+</div>
+<div th:fragment="blockDatepicker">
+<div class="datepicker">
+    <h5>Zablokuj od: </h5>
+    <input type="text" id="datepicker1" class="form-control" name="dateStart">
+</div>
+<div class="datepicker">
+    <h5>Zablokuj do: </h5>
+    <input type="text" id="datepicker2" class="form-control" name="dateEnd">
+</div>
 </div>
 </body>
 

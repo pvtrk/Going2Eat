@@ -48,27 +48,19 @@
                             <input type="submit" class="btn btn-primary" value="Dodaj promocję">
                         </form>
 
+                        <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
+                              th:action="${'/blockReservations/' + restaurant.id}">
+                            <input type="submit" class="btn btn-primary" value="Zablokuj rezerwacje">
+                        </form>
+                        <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
+                              th:action="${'/unblockReservations/' + restaurant.id}">
+                            <input type="submit" class="btn btn-primary" value="Odblokuj rezerwacje">
+                        </form>
+
                     </div>
                 </div>
             </div>
         </div>
-
-
-       <!-- <th:block th:each="restaurant : ${restaurants}">
-            <div class="restaurant">
-                <p th:text="${restaurant.name}"></p>
-                <p>Kuchnia: </p><p th:text="${restaurant.cuisineType}"></p>
-                <p th:text="${restaurant.restaurantStatus}"></p>
-                <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
-                      th:action="${'/block/' + restaurant.id}">
-                    <input type="submit" value="Usuń">
-                </form>
-                <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).OFF}"
-                      th:action="${'/unblock/' + restaurant.id}">
-                    <input type="submit" value="Odblokuj">
-                </form>
-            </div>
-        </th:block> -->
     </div>
 
 </div>

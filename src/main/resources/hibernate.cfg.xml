@@ -33,6 +33,6 @@
         <mapping class="pl.camp.it.model.Restaurant"/>
         <mapping class="pl.camp.it.model.Reservation"/>
         <mapping class="pl.camp.it.model.Promotion"/>
-
+        <mapping class="pl.camp.it.model.Blockade"/>
     </session-factory>
 </hibernate-configuration>

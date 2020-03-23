@@ -11,35 +11,41 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<div th:replace="fragments.html :: menu"></div>
+
+<div th:replace="restorerFragments.html :: menu"></div>
+
 <div class="container">
 
-
-
-    <div th:replace="logoFragment.html :: logo"></div>
+    <div th:replace="logoFragment.html ::logo"></div>
 
     <div id="content">
-
         <div id="accordion">
 
-            <div class="card">
+            <div class="card" th:each="blockade : ${blockades}">
                 <div class="card-header">
                     <a class="card-link" data-toggle="collapse" href="#collapseOne" th:text="${restaurant.name}" style="color:#000;">
                     </a>
                 </div>
                 <div id="collapseOne" class="collapse show" data-parent="#accordion">
                     <div class="card-body">
-                        <span>O restauracji: </span><span th:text="${restaurant.description}"></span>
-                        <form th:action="${'/makeReservation/' + restaurant.id}">
-                            <input type="submit" class="btn btn-primary" value="Zarezerwuj">
+                        <span>Kuchnia: </span><span th:text="${restaurant.cuisineType}"></span><br>
+                        <span>ID użytkownika: </span><a style="color:black;" th:href="${'/showUser/' + restaurant.userId}"><span th:text="${restaurant.userId}"></span></a><br>
+                        <span th:text="${restaurant.restaurantStatus}"></span>
+
+                        <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
+                              th:action="${'/block/' + restaurant.id}">
+                            <input type="submit" class="btn btn-danger" value="Usuń">
                         </form>
-                        <form th:action="${'/promotions/' + restaurant.id}">
-                            <input type="submit" class="btn btn-primary" value="Promocje">
+
+                        <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).OFF}"
+                              th:action="${'/unblock/' + restaurant.id}">
+                            <input type="submit" class="btn btn-success" value="Odblokuj">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 
 </div>

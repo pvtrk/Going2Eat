@@ -22,6 +22,8 @@ public class Restaurant {
     private RestaurantStatus restaurantStatus;
     @OneToMany(mappedBy = "restaurant")
     private List<Promotion> promotions;
+    @OneToMany(mappedBy = "restaurant")
+    private List<Blockade> blockades;
 
 
     public int getId() {

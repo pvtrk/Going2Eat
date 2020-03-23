@@ -37,13 +37,14 @@ public class PromotionsController {
     @PostMapping(value="/addPromotion/{id}")
     public String addingPromotionAction(@PathVariable int id, Model model, @ModelAttribute Promotion promotion,
                                         @RequestParam String date1, @RequestParam String date2) {
-
-        promotion.setRestaurant(this.restaurantService.getRestaurantById(id));
+        Restaurant restaurant = this.restaurantService.getRestaurantById(id);
+        promotion.setRestaurant(restaurant);
         promotion.setStatus(PromotionStatus.ACTIVE);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         promotion.setStartDate(LocalDate.parse(date1, formatter));
         promotion.setEndDate(LocalDate.parse(date2, formatter));
         this.promotionService.persistPromotion(promotion);
+        model.addAttribute("restaurant" , restaurant);
         return "addPromotion";
     }
 

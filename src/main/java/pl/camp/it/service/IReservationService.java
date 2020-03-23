@@ -18,4 +18,7 @@ public interface IReservationService {
     List<Reservation> getActiveReservationsForUser(int id);
     List<Reservation> getAllReservations();
     List<Reservation> getReservationsForRestorer(User restorer);
+    boolean isBlocked(int restaurantId, String reservationStartTime);
+    void createReservation(Restaurant restaurant, int guestsNumber, String comments, String reservationStartTime);
+    void doComplexReservationAction(Restaurant restaurant, int guestNumber, String comments, String reservationStartTime);
 }

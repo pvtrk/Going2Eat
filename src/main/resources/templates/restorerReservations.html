@@ -37,10 +37,10 @@
                         <span>Uwagi: </span><span th:text="${reservation.comments}"></span>
                         <span th:if="${reservation.reservationStatus == T(pl.camp.it.model.ReservationStatus).WAITING}">
                         <form th:action="${'/accept/' + reservation.id}">
-                                <input type="submit" value="Akceptuj">
+                                <input type="submit" class="btn btn-success" value="Akceptuj">
                         </form>
                         <form th:action="${'/decline/' + reservation.id}">
-                                <input type="submit" value="Odwołaj">
+                                <input type="submit" class="btn btn-danger" value="Odrzuć">
                         </form>
                         </span>
                     </div>
