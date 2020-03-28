@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Going2Eat</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<div class="container h-100" id="wrapper">
+
+    <div class="row h-100 justify-content-center align-items-center" id="content">
+        <div clas="col-10 col-md-8 col-lg-6">
+            <form method="post">
+                <div class="form-group">
+                    <label for="inputLogin">Login</label>
+                    <input type="text" class="form-control" th:field="*{register.login}" id="inputLogin" aria-describedby="loginHelp" placeholder="Login">
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword">Hasło</label>
+                    <input type="password" class="form-control" th:field="*{register.password}" id="inputPassword" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword2">Powtórz hasło</label>
+                    <input type="password" class="form-control" th:field="*{register.password2}" id="inputPassword2" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="inputName">Imie</label>
+                    <input type="text" class="form-control" th:field="*{register.name}" id="inputName" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="inputSurname">Nazwisko</label>
+                    <input type="text" class="form-control" th:field="*{register.surname}" id="inputSurname" placeholder="Password">
+                </div>
+                <select class="form-control form-control-sm" th:field="*{register.role}">
+                    <option th:each="userRole : ${T(pl.camp.it.model.UserRole).USER}"
+                    th:value="${userRole}" th:text="${userRole.displayValue}">Wybierz rodzaj użytkownika</option>
+                    <option th:each="userRole : ${T(pl.camp.it.model.UserRole).RESTORER}"
+                            th:value="${userRole}" th:text="${userRole.displayValue}">Wybierz rodzaj użytkownika</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Zaloguj</button>
+            </form>
+        </div>
+
+
+    </div>
+
+
+
+</div>
+
+<div id="footer" th:replace="footer.html :: footer"></div>
+
+</body>
+</html>

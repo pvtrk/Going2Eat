@@ -32,9 +32,11 @@ public class CommonController {
     public String redirectToMain() {
         return "redirect:/main";
     }
-    @GetMapping(value = "/reservation")
-    public String testReservation() {
-        return "reservation";
+
+    @GetMapping(value="/restorerMain")
+    public String showRestorerMain() {
+        return "restorerMain";
     }
+
 
 }
