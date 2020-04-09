@@ -2,6 +2,7 @@ package pl.camp.it.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity(name="treservation")
 public class Reservation {
@@ -59,11 +60,21 @@ public class Reservation {
         return startTime;
     }
 
+    public String getStartTimeDisplayValue() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return this.startTime.format(formatter);
+    }
+    public String getEndTimeDisplayValue() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return this.startTime.plusHours(2).format(formatter);
+    }
+
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
     public LocalDateTime getEndTime() {
+
         return this.startTime.plusHours(2);
     }
 

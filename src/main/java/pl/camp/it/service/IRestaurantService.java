@@ -1,6 +1,9 @@
 package pl.camp.it.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import pl.camp.it.model.Restaurant;
+
 
 import java.util.List;
 
@@ -13,4 +16,6 @@ public interface IRestaurantService {
     boolean checkFavRest(int restaurantId);
     List<Restaurant> getFavouriteRestaurants(int userId);
     List<Restaurant> getActiveRestaurants();
+    boolean validateRestaurantInput(Restaurant restaurant);
+
 }

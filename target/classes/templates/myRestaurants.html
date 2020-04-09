@@ -23,7 +23,7 @@
 
         <div id="accordion">
 
-            <div class="card" th:each="restaurant : ${restaurants}">
+            <div class="card" th:each="restaurant : ${restaurantPage.content}">
                 <div class="card-header">
                     <a class="card-link" data-toggle="collapse" href="#collapseOne" th:text="${restaurant.name}" style="color:#000;">
                     </a>
@@ -31,7 +31,7 @@
                 <div id="collapseOne" class="collapse show" data-parent="#accordion">
                     <div class="card-body">
                         <span>Kuchnia: </span><span th:text="${restaurant.cuisineType}"></span><br>
-                        <span>Status: </span><span th:text="${restaurant.restaurantStatus}"></span><br>
+                        <span>Status: </span><span th:text="${restaurant.restaurantStatus.displayValue}"></span><br>
 
                         <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
                               th:action="${'/block/' + restaurant.id}">
@@ -61,6 +61,19 @@
                 </div>
             </div>
         </div>
+        <nav aria-label="Page navigation" th:if="${restaurantPage.totalPages > 1}">
+            <ul class="pagination">
+                <li class="page-item" >
+                    <a class="page-link" th:href="@{/myRestaurants(size=${restaurantPage.size}, page=${previousPage})}">&laquo;</a>
+                </li>
+                <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                    <a class="page-link" th:href="@{/myRestaurants(size=${restaurantPage.size}, page=${pageNumber})}"
+                       th:text="${pageNumber}"
+                       th:classappend="${pageNumber==restaurantPage.number + 1} ? active"></a>
+                </li>
+                <li class="page-item"><a class="page-link" th:href="@{/myRestaurants(size=${restaurantPage.size}, page=${nextPage})}">&raquo;</a></li>
+            </ul>
+        </nav>
     </div>
 
 </div>

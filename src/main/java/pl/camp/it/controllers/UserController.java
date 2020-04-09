@@ -8,6 +8,7 @@ import pl.camp.it.model.Register;
 import pl.camp.it.model.UserRole;
 import pl.camp.it.service.IUserService;
 import pl.camp.it.session.SessionObject;
+import pl.camp.it.utils.RegexChecker;
 
 @Controller
 public class UserController {
@@ -15,6 +16,8 @@ public class UserController {
     SessionObject sessionObject;
     @Autowired
     IUserService userService;
+    @Autowired
+    RegexChecker regexChecker;
 
     @GetMapping(value="/login")
     public String showLoginScreen() {
@@ -22,17 +25,24 @@ public class UserController {
     }
 
     @PostMapping(value="/login")
-    public String doLoginAction(@RequestParam String login, @RequestParam String password) {
-        if(this.userService.authenticateUser(login, password)) {
-            sessionObject.setUser(this.userService.getUserByLogin(login));
+    public String doLoginAction(@RequestParam String login, @RequestParam String password, Model model) {
+        model.addAttribute("alert", null);
+        if(regexChecker.checkInput(login, regexChecker.getLoginRegex()) &&
+        regexChecker.checkInput(password, regexChecker.getPassRegex())) {
+
+        if(userService.authenticateUser(login, password)) {
+            sessionObject.setUser(userService.getUserByLogin(login));
             sessionObject.setLogged(true);
             if (sessionObject.getUser().getRole().equals(UserRole.USER)) {
                 return "redirect:/main";
             } else if (sessionObject.getUser().getRole().equals(UserRole.RESTORER)) {
                 return "redirect:/restorerMain";
-            } else {
+            } else if (sessionObject.getUser().getRole().equals(UserRole.ADMIN)) {
                 return "redirect:/adminMenu";
             }
+        } else {
+            model.addAttribute("alert", "Nieudana próba zalogowania. Spróbuj jeszcze raz");
+        }
         } return "login";
     }
 

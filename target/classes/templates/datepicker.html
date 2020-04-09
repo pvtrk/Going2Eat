@@ -16,7 +16,7 @@
 <div id="datepicker" th:fragment="datepicker">
 <div class="datepicker1" >
     <h5>Wybierz datę rezerwacji</h5>
-    <input type="text" id="picker" class="form-control" name="localDateTime">
+    <input type="text" id="picker" class="form-control" name="localDateTime" readonly="true">
 </div>
 
 
@@ -26,14 +26,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
 <script>
-    var date = new Date();
-    var now = new Date(date.getYear(), date.getMonth(), date.getDay());
     jQuery.datetimepicker.setLocale('pl')
     $('#picker, #datepicker, #datepicker2').datetimepicker({
         timepicker: true,
         datepicker: true,
         format: 'Y-m-d H:i', // formatDate
-        minDate: moment(),
+        minDate: 0,
         hours12: false,
         todayHighlight: true,
         step: 30,

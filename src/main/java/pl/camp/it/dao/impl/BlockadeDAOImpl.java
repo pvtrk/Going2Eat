@@ -32,6 +32,6 @@ public class BlockadeDAOImpl implements IBlockadeDAO {
     @Override
     public List<Blockade> getBlockadesByRestaurantId(int id) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM tblockade WHERE restaurantId = " + id).list();
+        return session.createQuery("FROM tblockade WHERE blockades = " + id).list();
     }
 }

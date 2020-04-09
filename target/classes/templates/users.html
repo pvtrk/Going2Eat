@@ -21,7 +21,7 @@
 
         <div id="accordion">
 
-            <div class="card" th:each="user : ${users}">
+            <div class="card" th:each="user : ${usersPage.content}">
                 <div class="card-header">
                     <a class="card-link" data-toggle="collapse" href="#collapseOne" th:text="${user.id}" style="color:#000;">
                     </a>
@@ -32,12 +32,25 @@
                         <span>Nazwisko: </span><span th:text="${user.surname}"></span></a><br>
                         <span>Id: </span><span th:text="${user.id}"></span>
 
-                        <p th:if="${user.role == T(pl.camp.it.model.UserRole).RESTORER}"><a style="color:black;" class="btn btn-primary" th:href="${'/userRestaurants/' + user.id}">Restauracje</a></p>
+                        <p th:if="${user.role == T(pl.camp.it.model.UserRole).RESTORER}"><a style="color:black;" class="btn btn-primary" th:href="@{/userRestaurants/(id=${user.id})}">Restauracje</a></p>
 
                     </div>
                 </div>
             </div>
         </div>
+        <nav aria-label="Page navigation" th:if="${usersPage.totalPages > 1}">
+            <ul class="pagination">
+                <li class="page-item" >
+                    <a class="page-link" th:href="@{/users(size=${usersPage.size}, page=${previousPage})}">&laquo;</a>
+                </li>
+                <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                    <a class="page-link" th:href="@{/users(size=${usersPage.size}, page=${pageNumber})}"
+                       th:text="${pageNumber}"
+                       th:classappend="${pageNumber==usersPage.number + 1} ? active"></a>
+                </li>
+                <li class="page-item"><a class="page-link" th:href="@{/users(size=${usersPage.size}, page=${nextPage})}">&raquo;</a></li>
+            </ul>
+        </nav>
     </div>
 
 </div>

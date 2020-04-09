@@ -13,30 +13,31 @@
 
 <div th:replace="adminFragments.html :: menu"></div>
 
-<div id="container">
+<div class="container">
 
     <div th:replace="logoFragment.html :: logo"></div>
 
 
 
     <div id="content">
-        <form method="post">
-            <th:block>
-                <div class="user">
-                    <p>Imie: </p><p th:text="${user.name}"></p>
-                    <p>Nazwisko: </p><p th:text="${user.surname}"></p>
-                    <p>ID usera: </p><p th:text="${user.id}"></p>
-                    <p th:if="${restaurants}">Restauracje: </p>
-                    <th:block th:if="${restaurant.id}" th:each="restaurant :${restaurants}">
-                        <div class="restaurant">
-                            <p>Nazwa restauracji: </p><p th:text="${restaurant.name}"></p>
-                            <p>Kuchnia: </p><p th:text="${restaurant.cuisineType}"></p>
-                            <p>Liczba miejsc: </p><p th:text="${restaurant.places}"></p>
-                            <p></p>
-                        </div>
-                    </th:block>
+        <div id="accordion">
+            <div class="card">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#collapseOne" th:text="${user.id}" style="color:#000;">
+                    </a>
                 </div>
-            </th:block>
+                <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                    <div class="card-body">
+                        <span>Imie: </span><span th:text="${user.name}"></span><br>
+                        <span>Nazwisko: </span><span th:text="${user.surname}"></span></a><br>
+                        <span>Id: </span><span th:text="${user.id}"></span>
+
+                        <p th:if="${user.role == T(pl.camp.it.model.UserRole).RESTORER}"><a style="color:black;" class="btn btn-primary" th:href="@{/userRestaurants/(id=${user.id})}">Restauracje</a></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
         </form>
     </div>
 

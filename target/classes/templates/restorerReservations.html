@@ -21,10 +21,19 @@
 
 
     <div id="content">
-
+        <div class="btn-group" th:each="restaurant : ${restaurants}">
+            <a class="btn dropdown-toggle" th:text="${restaurant.name}" data-toggle="dropdown" href="#">
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a th:href="@{/restorerReservations/(id=${restaurant.id}, type=1)}" tabindex="-1">Oczekujące</a></li>
+                <li><a th:href="@{/restorerReservations/(id=${restaurant.id}, type=2)}" tabindex="-1">Zaakceptowane</a></li>
+                <li><a th:href="@{/restorerReservations/(id=${restaurant.id}, type=3)}" tabindex="-1">Odrzucone</a></li>
+            </ul>
+        </div>
         <div id="accordion">
 
-            <div class="card" th:each="reservation : ${reservations}">
+            <div class="card" th:each="reservation : ${reservationsPage.content}">
                 <div class="card-header">
                     <a class="card-link" data-toggle="collapse" href="#collapseOne" th:text="${reservation.restaurantName}" style="color:#000;">
                     </a>
@@ -32,8 +41,8 @@
                 <div id="collapseOne" class="collapse show" data-parent="#accordion">
                     <div class="card-body">
                         <span>Liczba gości: </span><span th:text="${reservation.guestsQuantity}"></span><br>
-                        <span>Data: </span><span th:text="${reservation.startTime}"></span><br>
-                        <span>Status: </span><span th:text="${reservation.reservationStatus}"></span><br>
+                        <span>Data: </span><span th:text="${reservation.startTimeDisplayValue}"></span><br>
+                        <span>Status: </span><span th:text="${reservation.reservationStatus.displayValue}"></span><br>
                         <span>Uwagi: </span><span th:text="${reservation.comments}"></span>
                         <span th:if="${reservation.reservationStatus == T(pl.camp.it.model.ReservationStatus).WAITING}">
                         <form th:action="${'/accept/' + reservation.id}">
@@ -47,6 +56,19 @@
                 </div>
             </div>
         </div>
+        <nav aria-label="Page navigation" th:if="${reservationsPage.totalPages > 1}">
+            <ul class="pagination">
+                <li class="page-item" >
+                    <a class="page-link" th:href="@{/restorerReservations(size=${reservationsPage.size}, page=${previousPage}, type=${type}, id=${id})}">&laquo;</a>
+                </li>
+                <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                    <a class="page-link" th:href="@{/restorerReservations(size=${reservationsPage.size}, page=${pageNumber}, type=${type}, id=${id})}"
+                       th:text="${pageNumber}"
+                       th:classappend="${pageNumber==reservationsPage.number + 1} ? active"></a>
+                </li>
+                <li class="page-item"><a class="page-link" th:href="@{/restorerReservations(size=${reservationsPage.size}, page=${nextPage}, type=${type}, id=${id})}">&raquo;</a></li>
+            </ul>
+        </nav>
     </div>
 
 </div>

@@ -10,6 +10,7 @@ import pl.camp.it.model.Promotion;
 import pl.camp.it.model.Reservation;
 import pl.camp.it.service.IPromotionService;
 import pl.camp.it.service.IReservationService;
+import pl.camp.it.session.SessionObject;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,6 +18,8 @@ import java.util.List;
 
 @Controller
 public class CommonController {
+    @Autowired
+    SessionObject sessionObject;
     @Autowired
     IReservationService reservationService;
     @Autowired
@@ -30,13 +33,19 @@ public class CommonController {
     }
     @GetMapping(value="/")
     public String redirectToMain() {
-        return "redirect:/main";
+        return "redirect:/login";
     }
 
     @GetMapping(value="/restorerMain")
-    public String showRestorerMain() {
+    public String showRestorerMain(Model model) {
+        model.addAttribute("user", sessionObject.getUser());
         return "restorerMain";
     }
 
+    @GetMapping(value="/logout")
+    public String logout() {
+        sessionObject.setLogged(false);
+        return "redirect:/login";
+    }
 
 }

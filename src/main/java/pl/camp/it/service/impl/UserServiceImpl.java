@@ -31,7 +31,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean authenticateUser(String login, String pass) {
-        User user = this.userDAO.getUserByLogin(login);
+        User user = userDAO.getUserByLogin(login);
         if(user != null) {
             if(DigestUtils.md5Hex(pass).equals(user.getPass())) {
                 return true;
@@ -57,7 +57,7 @@ public class UserServiceImpl implements IUserService {
     public void registerUser(Register register) {
         User user = new User();
         user.setLogin(register.getLogin());
-        user.setPass(register.getPassword());
+        user.setPass(DigestUtils.md5Hex(register.getPassword()));
         user.setName(register.getName());
         user.setSurname(register.getSurname());
         user.setRole(register.getRole());

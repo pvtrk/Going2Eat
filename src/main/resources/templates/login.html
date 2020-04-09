@@ -15,19 +15,26 @@
 
     <div th:replace="logoFragment.html :: logo"></div>
 
-
+    <div class="alert alert-danger" th:if="${alert}" role="alert" th:text="${alert}">
+    </div>
     <div class="row h-100 justify-content-center align-items-center" id="content">
         <div clas="col-10 col-md-8 col-lg-6">
         <form method="post">
             <div class="form-group">
                 <label for="inputLogin">Login</label>
-                <input type="login" class="form-control" id="inputLogin" aria-describedby="loginHelp" placeholder="Login" name="login">
+                <input type="login" class="form-control"
+                pattern="^[A-Za-z0-9]{3,15}" title="Login może mieć od 3 do 15 liter, lub cyfr" id="inputLogin"
+                aria-describedby="loginHelp" placeholder="Login" name="login">
             </div>
             <div class="form-group">
                 <label for="inputPassword">Hasło</label>
-                <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
+                <input type="password" class="form-control" id="inputPassword"
+                pattern="^[A-Za-z0-9_@.\/#&*+-]{5,15}$" title="Hasło musi mieć minimum 6, a maksimum 15 liter bądź cyfr"
+                       placeholder="Password" name="password">
             </div>
-            <button type="submit" class="btn btn-primary">Zaloguj</button>
+            <button type="submit" class="btn btn-primary">Zaloguj</button></br>
+            <small>Nie masz konta?</small> </br>
+            <a href="/register" class="btn btn-primary">Załóż konto</a>
         </form>
         </div>
 

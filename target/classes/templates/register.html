@@ -11,30 +11,40 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-<div class="container h-100" id="wrapper">
+<div class="container h-100" style="margin-top: 100px;" id="wrapper">
 
     <div class="row h-100 justify-content-center align-items-center" id="content">
         <div clas="col-10 col-md-8 col-lg-6">
             <form method="post">
                 <div class="form-group">
                     <label for="inputLogin">Login</label>
-                    <input type="text" class="form-control" th:field="*{register.login}" id="inputLogin" aria-describedby="loginHelp" placeholder="Login">
+                    <input type="text" class="form-control" th:field="*{register.login}"
+                           pattern="^[A-Za-z0-9]{3,15}" title="Login może mieć od 3 do 15 liter, lub cyfr"
+                           id="inputLogin" aria-describedby="loginHelp" placeholder="Login">
                 </div>
                 <div class="form-group">
                     <label for="inputPassword">Hasło</label>
-                    <input type="password" class="form-control" th:field="*{register.password}" id="inputPassword" placeholder="Password">
+                    <input type="password" class="form-control"
+                           pattern="^[A-Za-z0-9_@.\/#&*+-]{5,15}$" title="Hasło musi składać się z 5 do 15 znaków."
+                           th:field="*{register.password}" id="inputPassword" placeholder="Password">
                 </div>
                 <div class="form-group">
                     <label for="inputPassword2">Powtórz hasło</label>
-                    <input type="password" class="form-control" th:field="*{register.password2}" id="inputPassword2" placeholder="Password">
+                    <input type="password" class="form-control" th:field="*{register.password2}"
+                           pattern="^[A-Za-z0-9_@.\/#&*+-]{5,15}$" title="Hasło musi składać się z 5 do 15 znaków."
+                           id="inputPassword2" placeholder="Password">
                 </div>
                 <div class="form-group">
                     <label for="inputName">Imie</label>
-                    <input type="text" class="form-control" th:field="*{register.name}" id="inputName" placeholder="Password">
+                    <input type="text" class="form-control" th:field="*{register.name}"
+                    pattern="^[A-Za-z]{3,15}"
+                           id="inputName" placeholder="Password">
                 </div>
                 <div class="form-group">
                     <label for="inputSurname">Nazwisko</label>
-                    <input type="text" class="form-control" th:field="*{register.surname}" id="inputSurname" placeholder="Password">
+                    <input type="text" class="form-control" th:field="*{register.surname}"
+                           pattern="^[A-Za-z]{3,15}"
+                           id="inputSurname" placeholder="Password">
                 </div>
                 <select class="form-control form-control-sm" th:field="*{register.role}">
                     <option th:each="userRole : ${T(pl.camp.it.model.UserRole).USER}"
@@ -42,7 +52,7 @@
                     <option th:each="userRole : ${T(pl.camp.it.model.UserRole).RESTORER}"
                             th:value="${userRole}" th:text="${userRole.displayValue}">Wybierz rodzaj użytkownika</option>
                 </select>
-                <button type="submit" class="btn btn-primary">Zaloguj</button>
+                <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Zaloguj</button>
             </form>
         </div>
 

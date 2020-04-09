@@ -15,12 +15,13 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <div id="datetimepicker" th:fragment="promotionsDatepicker">
     <div class="datepicker1">
-        <input type="text" id="datepicker" class="form-control" name="date1">
+        <input readonly type="text" id="datepicker" class="form-control" name="date1"
+        >
     </div>
 </div>
     <div id="datetimepicker2" th:fragment="promotionsDatepicker2">
         <div class="datepicker1">
-            <input type="text" id="datepicker2" class="form-control" name="date2">
+            <input readonly type="text" id="datepicker2" class="form-control" name="date2" >
         </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -35,7 +36,7 @@
         datepicker: true,
         timepicker: false,
         format: 'Y-m-d',
-        minDate: moment(),
+        minDate: 0,
         hours12: false,
         todayHighlight: true,
         yearStart: 2020,
@@ -47,6 +48,7 @@
             dayOfWeek: ['Poniedzialek', 'Wtorek', 'Sroda', 'Czwartek', 'Piatek', 'Sobota', 'Niedziela']
         }
     })
+    $("#datepicker1, #datepicker2").prop('readonly', true)
 </script>
 </div>
 </body>

@@ -22,14 +22,14 @@
 
         <div id="accordion">
 
-            <div class="card" th:each="reservation : ${reservations}">
+            <div class="card" th:each="reservation : ${reservationsPage.content}">
                 <div class="card-header">
                     <a class="card-link" data-toggle="collapse" href="#collapseOne" th:text="${reservation.restaurantName}" style="color:#000;">
                     </a>
                 </div>
                 <div id="collapseOne" class="collapse show" data-parent="#accordion">
                     <div class="card-body">
-                        <span>Data: </span><span th:text="${reservation.startTime}"></span> <br>
+                        <span>Data: </span><span th:text="${reservation.startTimeDisplayValue}"></span> <br>
                         <span>Liczba gości: </span><span th:text="${reservation.guestsQuantity}"></span>
                         <form th:action="${'/cancel/' + reservation.id}">
                             <input type="submit" class="btn btn-danger" value="Odwołaj">
@@ -38,7 +38,19 @@
                 </div>
             </div>
         </div>
-
+        <nav aria-label="Page navigation" th:if="${reservationsPage.totalPages > 1}">
+            <ul class="pagination">
+                <li class="page-item" >
+                    <a class="page-link" th:href="@{/myReservations(size=${reservationsPage.size}, page=${previousPage})}">&laquo;</a>
+                </li>
+                <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                    <a class="page-link" th:href="@{/myReservations(size=${reservationsPage.size}, page=${pageNumber})}"
+                       th:text="${pageNumber}"
+                       th:classappend="${pageNumber==reservationsPage.number + 1} ? active"></a>
+                </li>
+                <li class="page-item"><a class="page-link" th:href="@{/myReservations(size=${reservationsPage.size}, page=${nextPage})}">&raquo;</a></li>
+            </ul>
+        </nav>
 </div>
 </div>
 <div th:replace="footer.html :: footer"></div>

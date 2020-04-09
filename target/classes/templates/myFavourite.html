@@ -22,7 +22,7 @@
 
         <div id="accordion">
 
-            <div class="card" th:each="restaurant : ${favourites}">
+            <div class="card" th:each="restaurant : ${favRestPage.content}">
                 <div class="card-header">
                     <a class="card-link" data-toggle="collapse" href="#collapseOne" th:text="${restaurant.name}" style="color:#000;">
                     </a>
@@ -41,6 +41,19 @@
                 </div>
             </div>
         </div>
+        <nav aria-label="Page navigation" th:if="${favRestPage.totalPages > 1}">
+            <ul class="pagination">
+                <li class="page-item" >
+                    <a class="page-link" th:href="@{/myFavourite(size=${favRestPage.size}, page=${previousPage})}">&laquo;</a>
+                </li>
+                <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                    <a class="page-link" th:href="@{/myFavourite(size=${favRestPage.size}, page=${pageNumber})}"
+                       th:text="${pageNumber}"
+                       th:classappend="${pageNumber==favRestPage.number + 1} ? active"></a>
+                </li>
+                <li class="page-item"><a class="page-link" th:href="@{/myFavourite(size=${favRestPage.size}, page=${nextPage})}">&raquo;</a></li>
+            </ul>
+        </nav>
     </div>
 
 </div>

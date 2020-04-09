@@ -59,4 +59,22 @@ public class ReservationDAOImpl implements IReservationDAO {
         Session session = sessionFactory.openSession();
         return session.createQuery("FROM treservation WHERE userId = " + id + " AND reservationStatus = " + "'ACTIVE'").list();
     }
+
+    @Override
+    public List<Reservation> getWaitingReservationsForRestaurant(int id) {
+        Session session = sessionFactory.openSession();
+        return session.createQuery("FROM treservation WHERE restaurantId = " + id + "AND reservationStatus = " + "'WAITING'").list();
+    }
+
+    @Override
+    public List<Reservation> getAcceptedReservationsForRestaurant(int id) {
+        Session session = sessionFactory.openSession();
+        return session.createQuery("FROM treservation WHERE restaurantId = " + id + "AND reservationStatus = " + "'ACCEPTED'").list();
+    }
+
+    @Override
+    public List<Reservation> getDeclinedReservationsForRestaurant(int id) {
+        Session session = sessionFactory.openSession();
+        return session.createQuery("FROM treservation WHERE restaurantId = " + id + "AND reservationStatus = " + "'DECLINED'").list();
+    }
 }

@@ -18,22 +18,44 @@
     <div th:replace="logoFragment.html :: logo"></div>
 
     <div id="content">
+        <div class="alert alert-danger" th:if="${alert}" role="alert" th:text="${alert}">
+        </div>
         <form method="post">
         <div class="form-group">
             <label for="formRestaurantNameInput">Nazwa restauracji</label>
-            <input type="text" class="form-control" id="formRestaurantNameInput" placeholder="Nazwa restauracji" th:field="*{restaurant.name}">
+            <input type="text" class="form-control" pattern="^[A-Za-z0-9]{1,30}$"
+                   title="Nazwa restauracji może mieć do 30 znaków"
+                   id="formRestaurantNameInput" placeholder="Nazwa restauracji"
+                   th:field="*{restaurant.name}">
         </div>
         <div class="form-group">
             <label for="formDescriptionInput">Opis restauracji</label>
-            <input type="text" class="form-control" id="formDescriptionInput" placeholder="Nazwa restauracji" th:field="*{restaurant.name}">
+            <input type="text" class="form-control" id="formDescriptionInput" pattern="^[A-Za-z0-9_@.\/#&*+-]{5, 150}$"
+                   title="Opis może mieć maksymalnie 150 znaków"
+                   placeholder="Opis restauracji" th:field="*{restaurant.description}">
         </div>
         <div class="form-group">
             <label for="cuisineTypeInput">Rodzaj kuchni</label>
-            <input type="text" class="form-control" id="cuisineTypeInput" placeholder="Rodzaj kuchni" th:field="*{restaurant.cuisineType}">
+            <input type="text" class="form-control" id="cuisineTypeInput" pattern="^[A-Za-z]{3,20}$"
+                   title="Rodzaj kuchni może zawierać od 3 do 20 liter."
+                   placeholder="Rodzaj kuchni" th:field="*{restaurant.cuisineType}">
         </div>
         <div class="form-group">
+            <label for="cityInput">Miasto</label>
+            <input type="text" class="form-control" id="cityInput" pattern="^[A-Za-z]{3,15}$"
+                   title="Nazwa miasta musi składać się z 3 do 15 liter."
+                   placeholder="Miasto" th:field="*{restaurant.city}">
+        </div>
+            <div class="form-group">
+                <label for="adressInput">Adres</label>
+                <input type="text" class="form-control" id="adressInput"
+                       pattern="^[A-Za-z0-9]{3,15}[A-Za-z0-9_@./#&+-]{0,10}$" placeholder="Adres" th:field="*{restaurant.adress}">
+            </div>
+        <div class="form-group">
             <label for="placesQuantityInput">Ilość miejsc</label>
-            <input type="number" class="form-control" id="placesQuantityInput" placeholder="Liczba miejsc" th:field="*{restaurant.places}">
+            <input type="number" class="form-control" pattern="^[1-9]{1}[0-9]{0,2}$"
+                   title="Ilość miejsc musi mieścić się w przedziale od 1 do 999"
+                   id="placesQuantityInput" placeholder="Liczba miejsc" th:field="*{restaurant.places}">
         </div>
             <input type="submit" class="btn btn-primary" value="Zatwierdź">
         </form>

@@ -36,7 +36,7 @@ public class BlockadesController {
     @PostMapping(value="/blockReservations/{id}")
     public String blockReservations(@PathVariable int id, @RequestParam String dateStart,
                                     @RequestParam String dateEnd, Model model) {
-        sessionObject.setUser(this.userService.getUserById(2));
+       // sessionObject.setUser(this.userService.getUserById(2));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         Blockade blck = new Blockade();
         blck.setActive(true);

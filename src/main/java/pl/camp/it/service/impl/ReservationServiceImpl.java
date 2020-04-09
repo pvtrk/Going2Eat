@@ -16,6 +16,7 @@ import pl.camp.it.session.SessionObject;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -83,6 +84,20 @@ public class ReservationServiceImpl implements IReservationService {
         for(Restaurant restaurant : restaurants) {
             result.addAll(this.reservationDAO.getReservationsByRestaurantId(restaurant.getId()));
         }
+        result.sort(new Comparator<Reservation>() {
+            @Override
+            public int compare(Reservation reservation, Reservation t1) {
+                if (reservation.getReservationStatus().equals(ReservationStatus.WAITING)) {
+                    return -1;
+                } else if(reservation.getReservationStatus().equals(ReservationStatus.ACCEPTED)) {
+                    return 0;
+                } else if(reservation.getReservationStatus().equals(ReservationStatus.CANCELED)) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        });
         return result;
     }
 
@@ -128,5 +143,20 @@ public class ReservationServiceImpl implements IReservationService {
             createReservation(restaurant,
                     guestsNumber, comments, reservationStartTime);
         }
+    }
+
+    @Override
+    public List<Reservation> getWaitingReservationsForRestaurant(int id) {
+        return reservationDAO.getWaitingReservationsForRestaurant(id);
+    }
+
+    @Override
+    public List<Reservation> getAcceptedReservationsForRestaurant(int id) {
+        return reservationDAO.getAcceptedReservationsForRestaurant(id);
+    }
+
+    @Override
+    public List<Reservation> getDeclinedReservationsForRestaurant(int id) {
+        return reservationDAO.getDeclinedReservationsForRestaurant(id);
     }
 }

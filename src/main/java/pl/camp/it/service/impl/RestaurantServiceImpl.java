@@ -1,17 +1,25 @@
 package pl.camp.it.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.camp.it.dao.IRestaurantDAO;
 import pl.camp.it.model.Restaurant;
 import pl.camp.it.service.IRestaurantService;
 import pl.camp.it.session.SessionObject;
+import pl.camp.it.utils.RegexChecker;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class RestaurantServiceImpl implements IRestaurantService {
+    @Autowired
+    RegexChecker regexChecker;
     @Autowired
     SessionObject sessionObject;
     @Autowired
@@ -61,4 +69,29 @@ public class RestaurantServiceImpl implements IRestaurantService {
     public List<Restaurant> getActiveRestaurants() {
         return this.restaurantDAO.getActiveRestaurants();
     }
+
+    @Override
+    public boolean validateRestaurantInput(Restaurant restaurant) {
+        if((restaurant.getPlaces() != 0) &&
+                (restaurant.getPlaces() <= 999 && restaurant.getPlaces() > 0)) {
+            if((restaurant.getName() != null) &&
+                    regexChecker.checkInput(restaurant.getName(), regexChecker.getRestaurantNameRegex())) {
+                if((restaurant.getAdress() != null) &&
+                        regexChecker.checkInput(restaurant.getAdress(), regexChecker.getRestaurantAdressRegex())) {
+                    if((restaurant.getCity() != null) &&
+                            regexChecker.checkInput(restaurant.getCity(), regexChecker.getRestaurantAdressRegex())) {
+                        if((restaurant.getCuisineType() != null) &&
+                                regexChecker.checkInput(restaurant.getCuisineType(), regexChecker.getRestaurantCuisineRegex())) {
+                            if((restaurant.getDescription() != null) && regexChecker.
+                                    checkInput(restaurant.getDescription(), regexChecker.getDescriptionRegex())) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        } return false;
+    }
+
+
 }
