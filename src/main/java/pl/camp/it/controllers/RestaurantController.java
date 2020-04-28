@@ -70,7 +70,7 @@ public class RestaurantController {
     }
     @GetMapping(value="/addToFavourite/{id}")
     public String addRestaurantToFavourites(@PathVariable int id) {
-        if(this.restaurantService.checkFavRest(id)) {
+        if(!this.restaurantService.isAlreadyFavourite(id)) {
             this.restaurantService.addFavouriteRestaurant(sessionObject.getUser().getId(), id);
         }
         return "redirect:/restaurants";

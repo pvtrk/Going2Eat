@@ -13,7 +13,7 @@ public interface IRestaurantService {
     List<Restaurant> getRestaurantsByUserId(int id);
     Restaurant getRestaurantById(int id);
     void addFavouriteRestaurant(int userId, int restaurantId);
-    boolean checkFavRest(int restaurantId);
+    boolean isAlreadyFavourite(int restaurantId);
     List<Restaurant> getFavouriteRestaurants(int userId);
     List<Restaurant> getActiveRestaurants();
     boolean validateRestaurantInput(Restaurant restaurant);

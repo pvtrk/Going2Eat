@@ -55,13 +55,15 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void registerUser(Register register) {
-        User user = new User();
-        user.setLogin(register.getLogin());
-        user.setPass(DigestUtils.md5Hex(register.getPassword()));
-        user.setName(register.getName());
-        user.setSurname(register.getSurname());
-        user.setRole(register.getRole());
-        this.userDAO.persistUser(user);
+        if (register!= null) {
+            User user = new User();
+            user.setLogin(register.getLogin());
+            user.setPass(DigestUtils.md5Hex(register.getPassword()));
+            user.setName(register.getName());
+            user.setSurname(register.getSurname());
+            user.setRole(register.getRole());
+            this.userDAO.persistUser(user);
+        }
     }
 
 }

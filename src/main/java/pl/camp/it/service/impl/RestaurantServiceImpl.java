@@ -1,10 +1,7 @@
 package pl.camp.it.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 import pl.camp.it.dao.IRestaurantDAO;
 import pl.camp.it.model.Restaurant;
@@ -12,8 +9,6 @@ import pl.camp.it.service.IRestaurantService;
 import pl.camp.it.session.SessionObject;
 import pl.camp.it.utils.RegexChecker;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -50,14 +45,14 @@ public class RestaurantServiceImpl implements IRestaurantService {
     }
 
     @Override
-    public boolean checkFavRest(int restaurantId) {
+    public boolean isAlreadyFavourite(int restaurantId) {
         List<Restaurant> rest = this.restaurantDAO.getFavouriteRestaurants(sessionObject.getUser().getId());
         for (Restaurant restaurant : rest) {
             if (restaurant.getId() == this.restaurantDAO.getRestaurantById(restaurantId).getId()) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     @Override

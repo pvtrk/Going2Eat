@@ -30,6 +30,10 @@ public class Restaurant {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getUserId() {
         return userId;
     }
@@ -101,5 +105,30 @@ public class Restaurant {
 
     public void setPromotions(List<Promotion> promotions) {
         this.promotions = promotions;
+    }
+
+    public static void autoValidateRestaurant(Restaurant restaurant) {
+        if(restaurant == null) {
+            throw new RestaurantValidationException();
+        }
+        if(restaurant.getName() == null) {
+            throw new RestaurantValidationException();
+        }
+        if(restaurant.getPlaces() <= 0) {
+            throw new RestaurantValidationException();
+        }
+        if(restaurant.getRestaurantStatus() == null) {
+            throw new RestaurantValidationException();
+        }
+        if(restaurant.getCity() == null) {
+            throw new RestaurantValidationException();
+        }
+        if(restaurant.getId() < 1) {
+            throw new RestaurantValidationException();
+        }
+    }
+
+    static class RestaurantValidationException extends RuntimeException {
+
     }
 }

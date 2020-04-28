@@ -13,16 +13,14 @@ public interface IReservationService {
     void persistReservation(Reservation reservation);
     Reservation getReservationById(int id);
     List<Reservation> getReservationsByRestaurantId(int id);
-    int getBookedPlaces(int id, LocalDateTime time);
     List<Reservation> getReservationsByUserId(int id);
     List<Reservation> getActiveReservationsForUser(int id);
     List<Reservation> getAllReservations();
     List<Reservation> getReservationsForRestorer(User restorer);
-    boolean isBlocked(int restaurantId, String reservationStartTime);
-    void createReservation(Restaurant restaurant, int guestsNumber,
-                           String comments, String reservationStartTime);
-    void doComplexReservationAction(Restaurant restaurant, int guestNumber,
+    boolean doComplexReservationAction(Restaurant restaurant, int guestNumber,
                                     String comments, String reservationStartTime);
+    boolean isBlocked(int restaurantId, String startTime);
+
     List<Reservation> getWaitingReservationsForRestaurant(int id);
     List<Reservation> getAcceptedReservationsForRestaurant(int id);
     List<Reservation> getDeclinedReservationsForRestaurant(int id);

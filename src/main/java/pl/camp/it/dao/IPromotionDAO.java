@@ -8,5 +8,6 @@ public interface IPromotionDAO {
     void persistPromotion(Promotion promotion);
     Promotion getPromotionById(int id);
     List<Promotion> getPromotionsSortedByDate();
+    List<Promotion> getAllPromotions();
 
 }

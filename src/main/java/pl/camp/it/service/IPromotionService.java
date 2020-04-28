@@ -7,5 +7,6 @@ import java.util.List;
 public interface IPromotionService {
     void persistPromotion(Promotion promotion);
     List<Promotion> getPromotionsSortedByDate();
-    boolean validatePromotionInput(Promotion promotion);
+    List<Promotion> getDistinctedPromotions();
+    boolean createPromotion(Promotion promotion, String startDate, String endDate);
 }

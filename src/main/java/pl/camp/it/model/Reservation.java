@@ -97,4 +97,32 @@ public class Reservation {
     public void setComments(String comments) {
         this.comments = comments;
     }
+
+    public static void autoValidateReservation(Reservation reservation) {
+        if(reservation == null) {
+            throw new RestaurantValidationException();
+        }
+        if(reservation.getRestaurantName() == null) {
+            throw new RestaurantValidationException();
+        }
+        if(reservation.getReservationStatus() == null) {
+            throw new RestaurantValidationException();
+        }
+        if(reservation.getGuestsQuantity() < 1 ) {
+            throw new RestaurantValidationException();
+        }
+        if(reservation.getStartTime() == null) {
+            throw new RestaurantValidationException();
+        }
+        if(reservation.getRestaurantId() < 1) {
+            throw new RestaurantValidationException();
+        }
+        if(reservation.getUserId() <1) {
+            throw new RestaurantValidationException();
+        }
+    }
+
+    public static class RestaurantValidationException extends RuntimeException {
+
+    }
 }

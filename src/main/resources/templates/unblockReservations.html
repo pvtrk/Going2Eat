@@ -28,17 +28,12 @@
                 </div>
                 <div id="collapseOne" class="collapse show" data-parent="#accordion">
                     <div class="card-body">
-                        <span>Kuchnia: </span><span th:text="${restaurant.cuisineType}"></span><br>
-                        <span>ID użytkownika: </span><a style="color:black;" th:href="${'/showUser/' + restaurant.userId}"><span th:text="${restaurant.userId}"></span></a><br>
-                        <span th:text="${restaurant.restaurantStatus.displayValue}"></span>
+                        <span>Start: </span><span th:text="${blockade.startDate}"></span><br>
+                        <span>Koniec: </span><span th:text="${blockade.endDate}"></span></a><br>
 
-                        <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
-                              th:action="${'/blockReservation/' + restaurant.id}">
-                            <input type="submit" class="btn btn-danger" value="Usuń">
-                        </form>
 
-                        <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).OFF}"
-                              th:action="${'/unblockReservation/' + restaurant.id}">
+                        <form th:if="${blockade.active}"
+                              th:action="${'/unblck/' + blockade.id}" th:method="POST">
                             <input type="submit" class="btn btn-success" value="Odblokuj">
                         </form>
                     </div>

@@ -32,12 +32,19 @@ public class PromotionDAOImpl implements IPromotionDAO {
 
     @Override
     public Promotion getPromotionById(int id) {
-        return null;
+        Session session = sessionFactory.openSession();
+        return session.createQuery("FROM tpromotion WHERE id = " + id, Promotion.class).uniqueResult();
     }
 
     @Override
     public List<Promotion> getPromotionsSortedByDate() {
         Session session = sessionFactory.openSession();
         return session.createQuery("FROM tpromotion WHERE status = 'ACTIVE' ORDER BY startDate").list();
+    }
+
+    @Override
+    public List<Promotion> getAllPromotions() {
+        Session session = sessionFactory.openSession();
+        return session.createQuery("FROM tpromotion").list();
     }
 }

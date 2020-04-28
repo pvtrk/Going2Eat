@@ -6,5 +6,8 @@ import java.util.List;
 
 public interface IBlockadeService {
     void persistBlockade(Blockade blockade);
+    Blockade getBlockadeById(int id);
     List<Blockade> getBlockadesByRestaurantId(int id);
+    List<Blockade> getActiveBlockadesForRestaurant(int id);
+    boolean createBlockade(int restaurantId, String startDate, String endDate);
 }

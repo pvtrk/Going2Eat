@@ -10,7 +10,7 @@ public class Blockade {
     private int id;
     private int userId;
     @ManyToOne
-    @JoinColumn(name = "blockades")
+    @JoinColumn(name = "restaurantId")
     private Restaurant restaurant;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
@@ -59,5 +59,25 @@ public class Blockade {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    public static void autoValidateBlockade(Blockade blockade) {
+        if (blockade == null) {
+            throw new BlockadeValidationException();
+        }
+        if(blockade.getRestaurant() == null) {
+            throw new BlockadeValidationException();
+        }
+        if(blockade.getStartDate() == null) {
+            throw new BlockadeValidationException();
+        }
+        if(blockade.getUserId() < 1) {
+            throw new BlockadeValidationException();
+        }
+
+    }
+
+    public static class BlockadeValidationException extends RuntimeException{
+
     }
 }

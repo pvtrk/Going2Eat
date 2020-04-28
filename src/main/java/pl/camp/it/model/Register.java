@@ -55,4 +55,22 @@ public class Register {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+    public static void autoValidateRegister(Register register) {
+        if(register == null) {
+            throw new RegisterValidationException();
+        }
+        if(register.getPassword() == null) {
+            throw new RegisterValidationException();
+        }
+        if(register.getLogin() == null) {
+            throw new RegisterValidationException();
+        }
+        if(register.getPassword() != register.getPassword2()) {
+            throw new RegisterValidationException();
+        }
+    }
+    public static class RegisterValidationException extends RuntimeException{
+
+    }
 }

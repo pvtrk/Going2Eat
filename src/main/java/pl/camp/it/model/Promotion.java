@@ -10,7 +10,7 @@ public class Promotion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
-    @JoinColumn(name = "promotions")
+    @JoinColumn(name = "restaurantId")
     private Restaurant restaurant;
     private String description;
     private int price;
@@ -78,5 +78,34 @@ public class Promotion {
 
     public void setDistinction(boolean distinction) {
         this.distinction = distinction;
+    }
+
+    public static void autoValidatePromotion(Promotion promotion) {
+        if(promotion == null) {
+            throw new PromotionValidationException();
+        }
+        if(promotion.getRestaurant() == null) {
+            throw new PromotionValidationException();
+        }
+        if(promotion.getStartDate() == null) {
+            throw new PromotionValidationException();
+        }
+        if(promotion.getDescription() == null) {
+            throw new PromotionValidationException();
+        }
+        if(promotion.getStatus() == null) {
+            throw new PromotionValidationException();
+        }
+        if(promotion.getPrice() < 1) {
+            throw new PromotionValidationException();
+        }
+        if(promotion.getId() < 1) {
+            throw new PromotionValidationException();
+        }
+
+    }
+
+    public static class PromotionValidationException extends RuntimeException{
+
     }
 }

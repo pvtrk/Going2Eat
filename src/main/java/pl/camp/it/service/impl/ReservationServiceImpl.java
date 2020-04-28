@@ -2,7 +2,7 @@ package pl.camp.it.service.impl;
 
 import org.apache.tomcat.jni.Local;
 import org.hibernate.Session;
-import org.joda.time.Interval;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.config.IntervalTask;
 import org.springframework.stereotype.Service;
@@ -47,20 +47,6 @@ public class ReservationServiceImpl implements IReservationService {
         return this.reservationDAO.getReservationsByRestaurantId(id);
     }
 
-    @Override
-    public int getBookedPlaces(int id, LocalDateTime time) {
-        int guestNumber = 0;
-        Restaurant restaurant = this.restaurantDAO.getRestaurantById(id);
-        List<Reservation> reservationsList = this.reservationDAO.getReservationsByRestaurantId(id);
-        for(Reservation reserv : reservationsList) {
-            if(reserv.getStartTime().isAfter(time.plusHours(2)) || reserv.getEndTime().isBefore(time)) {
-                continue;
-            }
-            guestNumber = guestNumber + reserv.getGuestsQuantity();
-        }
-
-        return guestNumber;
-    }
 
     @Override
     public List<Reservation> getReservationsByUserId(int id) {
@@ -86,63 +72,51 @@ public class ReservationServiceImpl implements IReservationService {
         }
         result.sort(new Comparator<Reservation>() {
             @Override
-            public int compare(Reservation reservation, Reservation t1) {
-                if (reservation.getReservationStatus().equals(ReservationStatus.WAITING)) {
-                    return -1;
-                } else if(reservation.getReservationStatus().equals(ReservationStatus.ACCEPTED)) {
-                    return 0;
-                } else if(reservation.getReservationStatus().equals(ReservationStatus.CANCELED)) {
-                    return 0;
-                } else {
-                    return 1;
-                }
+            public int compare(Reservation r1, Reservation r2) {
+                if((r1.getReservationStatus().getNumberValue() - r2.getReservationStatus().getNumberValue()) != 0) {
+
+                    return r1.getReservationStatus().getNumberValue() - r2.getReservationStatus().getNumberValue();
+
+                } return r1.getRestaurantName().compareTo(r2.getRestaurantName());
             }
         });
         return result;
     }
 
     @Override
-    public boolean isBlocked(int restaurantId, String reservationStartTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime start = LocalDateTime.parse(reservationStartTime, formatter);
+    public boolean doComplexReservationAction(Restaurant restaurant, int guestsNumber,
+                                           String comments, String reservationStartTime) {
+        LocalDateTime startTime = parseStringToDate(reservationStartTime);
+
+        int freePlaces = (restaurant.getPlaces()) -
+                (getBookedPlaces(restaurant.getId(), startTime));
+
+        if (freePlaces > guestsNumber) {
+
+            createReservation(restaurant,
+                    guestsNumber, comments, startTime);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isBlocked(int restaurantId, String startTime) {
+        LocalDateTime start = parseStringToDate(startTime);
         LocalDateTime end = start.plusHours(2);
-        List<Blockade> blockList = this.blockadeService.getBlockadesByRestaurantId(restaurantId);
+
+        List<Blockade> blockList = this.blockadeService.getActiveBlockadesForRestaurant(restaurantId);
+
         for(Blockade blockade : blockList) {
             if(end.isBefore(blockade.getStartDate()) ||
                     ((blockade.getEndDate() != null) && start.isAfter(blockade.getEndDate()))) {
                 continue;
-            } else if (blockade.getEndDate() == null && blockade.getStartDate().isBefore(end)) {
+            } else {
                 return true;
             }
         }
         return false;
-    }
-
-    @Override
-    public void createReservation(Restaurant restaurant, int guestNumber, String comments, String reservationStartTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        Reservation reservation = new Reservation();
-        reservation.setUserId(sessionObject.getUser().getId());
-        reservation.setRestaurantId(restaurant.getId());
-        reservation.setRestaurantName(restaurant.getName());
-        reservation.setGuestsQuantity(guestNumber);
-        reservation.setReservationStatus(ReservationStatus.WAITING);
-        reservation.setComments(comments);
-        reservation.setStartTime(LocalDateTime.parse(reservationStartTime, formatter));
-        reservation.setEndTime(LocalDateTime.parse(reservationStartTime, formatter).plusHours(2));
-        this.reservationService.persistReservation(reservation);
-    }
-
-    @Override
-    public void doComplexReservationAction(Restaurant restaurant, int guestsNumber,
-                                           String comments, String reservationStartTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        int freePlaces = (restaurant.getPlaces()) -
-                (getBookedPlaces(restaurant.getId(), LocalDateTime.parse(reservationStartTime, formatter)));
-        if ((!isBlocked(restaurant.getId(), reservationStartTime)) &&freePlaces > guestsNumber) {
-            createReservation(restaurant,
-                    guestsNumber, comments, reservationStartTime);
-        }
     }
 
     @Override
@@ -158,5 +132,38 @@ public class ReservationServiceImpl implements IReservationService {
     @Override
     public List<Reservation> getDeclinedReservationsForRestaurant(int id) {
         return reservationDAO.getDeclinedReservationsForRestaurant(id);
+    }
+
+    private LocalDateTime parseStringToDate(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return LocalDateTime.parse(dateString, formatter);
+    }
+
+    private int getBookedPlaces(int id, LocalDateTime time) {
+        int bookedPlaces = 0;
+        List<Reservation> reservationsList = this.reservationDAO.getReservationsByRestaurantId(id);
+
+        for(Reservation reserv : reservationsList) {
+            if(reserv.getStartTime().isAfter(time.plusHours(2)) || reserv.getEndTime().isBefore(time)) {
+                continue;
+            }
+            bookedPlaces += reserv.getGuestsQuantity();
+        }
+
+        return bookedPlaces;
+    }
+
+    private void createReservation(Restaurant restaurant, int guestNumber,
+                                   String comments, LocalDateTime startTime) {
+        Reservation reservation = new Reservation();
+        reservation.setUserId(sessionObject.getUser().getId());
+        reservation.setRestaurantId(restaurant.getId());
+        reservation.setRestaurantName(restaurant.getName());
+        reservation.setGuestsQuantity(guestNumber);
+        reservation.setReservationStatus(ReservationStatus.WAITING);
+        reservation.setComments(comments);
+        reservation.setStartTime(startTime);
+        reservation.setEndTime(startTime.plusHours(2));
+        this.reservationService.persistReservation(reservation);
     }
 }

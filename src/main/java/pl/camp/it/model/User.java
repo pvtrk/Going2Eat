@@ -61,4 +61,26 @@ public class User {
     public void setRole(UserRole role) {
         this.role = role;
     }
+
+    public static void autoVlidate(User user) {
+        if (user != null) {
+            if (user.getId() < 0) {
+                throw new UserValidationException();
+            }
+            if (user.getRole() == null) {
+                throw new UserValidationException();
+            }
+            if (user.getPass() == null) {
+                throw new UserValidationException();
+            }
+            if (user.getLogin() == null) {
+                throw new UserValidationException();
+            }
+        }
+
+    }
+
+    static class UserValidationException extends RuntimeException{
+
+    }
 }

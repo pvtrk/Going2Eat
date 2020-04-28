@@ -20,7 +20,7 @@
 <div class="container">
 
     <div th:replace="logoFragment.html :: logo"></div>
-
+    <h3 th:if="${message}" th:text="${message}"></h3>
     <div id="content">
         <form method="post">
             <div th:replace="datepicker.html :: blockDatepicker"></div>

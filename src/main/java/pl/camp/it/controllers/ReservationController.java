@@ -1,7 +1,5 @@
 package pl.camp.it.controllers;
 
-import jdk.nashorn.internal.ir.Block;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,11 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.camp.it.model.*;
 import pl.camp.it.service.IReservationService;
 import pl.camp.it.service.IRestaurantService;
-import pl.camp.it.service.IUserService;
 import pl.camp.it.service.impl.PageService;
 import pl.camp.it.session.SessionObject;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,12 +30,10 @@ public class ReservationController {
     @Autowired
     IRestaurantService restaurantService;
     @Autowired
-    IUserService userService;
-    @Autowired
     SessionObject sessionObject;
 
     @GetMapping(value="/makeReservation/{id}")
-    public String makeReservation(@PathVariable int id, Model model) {
+    public String makeReservation(@PathVariable int id) {
 
         return "reservation";
     }
@@ -46,16 +41,18 @@ public class ReservationController {
     @PostMapping(value="/makeReservation/{id}")
     public String submitReservation(@PathVariable int id, @RequestParam String localDateTime,
                                     @RequestParam int guestsNumber, @RequestParam String comments, Model model) {
-       // sessionObject.setUser(userService.getUserById(1));
-        /*DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        int freePlaces = (restaurantService.getRestaurantById(id).getPlaces()) -
-                (reservationService.getBookedPlaces(id, LocalDateTime.parse(localDateTime, formatter)));
-        if (freePlaces > guestsNumber) {
-            this.reservationService.createReservation(this.restaurantService.getRestaurantById(id),
-                    guestsNumber, comments, localDateTime);
-        }*/
+
         Restaurant restaurant = this.restaurantService.getRestaurantById(id);
-        this.reservationService.doComplexReservationAction(restaurant, guestsNumber, comments, localDateTime);
+        if(!this.reservationService.isBlocked(restaurant.getId(), localDateTime)) {
+            boolean isDone = this.reservationService.doComplexReservationAction(restaurant, guestsNumber, comments, localDateTime);
+            if (isDone) {
+                model.addAttribute("message", "Gratulacje, udało Ci się dokonać rezerwacji!");
+            } else {
+                model.addAttribute("message", "Niestety nie udało się zrobić rezerwacji");
+            }
+        } else {
+            model.addAttribute("message", "Restauracja w tym okresie nie przyjmuje żadnych rezerwacji");
+        }
         return "reservation";
     }
 

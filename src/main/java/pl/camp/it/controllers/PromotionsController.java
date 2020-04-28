@@ -76,17 +76,14 @@ public class PromotionsController {
         Restaurant restaurant = this.restaurantService.getRestaurantById(id);
         if (promotion != null) {
             promotion.setRestaurant(restaurant);
-            if (promotionService.validatePromotionInput(promotion)) {
-                promotion.setStatus(PromotionStatus.ACTIVE);
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                promotion.setStartDate(LocalDate.parse(date1, formatter));
-                promotion.setEndDate(LocalDate.parse(date2, formatter));
-                this.promotionService.persistPromotion(promotion);
-                model.addAttribute("restaurant", restaurant);
-
+            if (promotionService.createPromotion(promotion, date1, date2)) {
+                model.addAttribute("message", "Dodano promocję!");
+            } else {
+                model.addAttribute("message", "Nie udało się dodać promocji.");
             }
         }
         model.addAttribute("restaurant", restaurant);
+
         return "addPromotion";
     }
 }

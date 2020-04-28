@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.camp.it.model.Blockade;
+import pl.camp.it.model.Restaurant;
 import pl.camp.it.service.IBlockadeService;
 import pl.camp.it.service.IRestaurantService;
 import pl.camp.it.service.IUserService;
@@ -22,8 +23,6 @@ public class BlockadesController {
     @Autowired
     SessionObject sessionObject;
     @Autowired
-    IUserService userService;
-    @Autowired
     IRestaurantService restaurantService;
     @Autowired
     IBlockadeService blockadeService;
@@ -36,25 +35,31 @@ public class BlockadesController {
     @PostMapping(value="/blockReservations/{id}")
     public String blockReservations(@PathVariable int id, @RequestParam String dateStart,
                                     @RequestParam String dateEnd, Model model) {
-       // sessionObject.setUser(this.userService.getUserById(2));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        Blockade blck = new Blockade();
-        blck.setActive(true);
-        blck.setRestaurant(this.restaurantService.getRestaurantById(id));
-        blck.setUserId(sessionObject.getUser().getId());
-        blck.setStartDate(LocalDateTime.parse(dateStart, formatter));
-        if(dateEnd != null) {
-            blck.setEndDate(LocalDateTime.parse(dateEnd, formatter));
+        boolean blockAction = blockadeService.createBlockade(id, dateStart, dateEnd);
+        if(blockAction) {
+            model.addAttribute("message", "Udało Ci się zablokować rezerwacje");
+        } else {
+            model.addAttribute("message", "Coś poszło nie tak");
         }
-        this.blockadeService.persistBlockade(blck);
-        return "redirect:/myRestaurants";
+        return "blockReservations";
 
     }
 
     @GetMapping(value="/unblockReservations/{id}")
-    public String showUnlockingForm(@PathVariable int id, Model model) {
-        List<Blockade> blockadeList = this.blockadeService.getBlockadesByRestaurantId(id);
+    public String showUnblockingForm(@PathVariable int id, Model model) {
+        List<Blockade> blockadeList = this.blockadeService.getActiveBlockadesForRestaurant(id);
+        Restaurant restaurant = this.restaurantService.getRestaurantById(id);
         model.addAttribute("blockades" , blockadeList);
+        model.addAttribute("restaurant", restaurant);
         return "unblockReservations";
+    }
+    @PostMapping(value="/unblck/{id}")
+    public String unblockReservation(@PathVariable int id) {
+
+        Blockade blck = this.blockadeService.getBlockadeById(id);
+        blck.setActive(false);
+        this.blockadeService.persistBlockade(blck);
+
+        return "redirect:/myRestaurants";
     }
 }

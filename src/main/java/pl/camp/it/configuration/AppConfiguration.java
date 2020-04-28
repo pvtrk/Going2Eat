@@ -12,7 +12,6 @@ import pl.camp.it.filters.UserFilter;
 import pl.camp.it.session.SessionObject;
 
 @Configuration
-@ImportResource("classpath:applicationContext.xml")
 public class AppConfiguration {
     @Bean
     SessionFactory sessionFactory() {
