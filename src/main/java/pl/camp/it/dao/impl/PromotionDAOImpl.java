@@ -47,4 +47,10 @@ public class PromotionDAOImpl implements IPromotionDAO {
         Session session = sessionFactory.openSession();
         return session.createQuery("FROM tpromotion").list();
     }
+
+    @Override
+    public List<Promotion> getPromotionsByRestaurantId(int id) {
+        Session session = sessionFactory.openSession();
+        return session.createQuery("FROM tpromotion WHERE status = 'ACTIVE' AND restaurantId = " + id).list();
+    }
 }

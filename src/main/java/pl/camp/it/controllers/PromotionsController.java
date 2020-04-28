@@ -86,5 +86,20 @@ public class PromotionsController {
 
         return "addPromotion";
     }
+    @GetMapping(value= "/deletePromotion/{id}")
+    public String deletePromotionForm(@PathVariable int id, Model model) {
+        List<Promotion> promotions = promotionService.getPromotionsByRestaurantId(id);
+        model.addAttribute("promotions", promotions);
+
+        return "deletePromotion";
+    }
+
+    @PostMapping(value ="/delete/{id}")
+    public String deletePromotionAction(@PathVariable int id) {
+        Promotion promotion = promotionService.getPromotionById(id);
+        promotion.setStatus(PromotionStatus.OFF);
+        promotionService.persistPromotion(promotion);
+        return "redirect:/myRestaurants";
+    }
 }
 

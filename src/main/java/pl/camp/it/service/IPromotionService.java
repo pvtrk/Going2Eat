@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface IPromotionService {
     void persistPromotion(Promotion promotion);
+    Promotion getPromotionById(int id);
     List<Promotion> getPromotionsSortedByDate();
     List<Promotion> getDistinctedPromotions();
+    List<Promotion> getPromotionsByRestaurantId(int id);
     boolean createPromotion(Promotion promotion, String startDate, String endDate);
 }

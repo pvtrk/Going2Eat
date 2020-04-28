@@ -116,7 +116,10 @@ public class ReservationController {
             reservations = reservationService.getAcceptedReservationsForRestaurant(restaurantId);
         } else if(sortType == 3 && restaurantId != 0)  {
             reservations = reservationService.getDeclinedReservationsForRestaurant(restaurantId);
-        } else {
+        }else if(sortType == 4 && restaurantId != 0) {
+            reservations = reservationService.getCanceledReservationsForRestaurant(restaurantId);
+        }
+        else {
            reservations = reservationService.getReservationsForRestorer(sessionObject.getUser());
         }
 

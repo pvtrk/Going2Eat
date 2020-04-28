@@ -25,6 +25,11 @@ public class PromotionServiceImpl implements IPromotionService {
     }
 
     @Override
+    public Promotion getPromotionById(int id) {
+        return this.promotionDAO.getPromotionById(id);
+    }
+
+    @Override
     public List<Promotion> getPromotionsSortedByDate() {
         return this.promotionDAO.getPromotionsSortedByDate();
     }
@@ -39,6 +44,11 @@ public class PromotionServiceImpl implements IPromotionService {
             }
         }
         return result;
+    }
+
+    @Override
+    public List<Promotion> getPromotionsByRestaurantId(int id) {
+        return this.promotionDAO.getPromotionsByRestaurantId(id);
     }
 
 
@@ -63,8 +73,10 @@ public class PromotionServiceImpl implements IPromotionService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             promotion.setStartDate(LocalDate.parse(date1, formatter));
             promotion.setEndDate(LocalDate.parse(date2, formatter));
-            this.promotionDAO.persistPromotion(promotion);
-            return true;
+            if(promotion.getStartDate().isBefore(promotion.getEndDate())) {
+                this.promotionDAO.persistPromotion(promotion);
+                return true;
+            }
         } return false;
     }
 }

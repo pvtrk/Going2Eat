@@ -33,7 +33,7 @@ public class AppConfiguration {
         registrationBean.addUrlPatterns("/restorerMain/*", "/restorerReservations/*",
                 "/restorerAllRestaurants/*" , "/addRestaurant/*" , "/addPromotion/*" ,
                 "/blockReservations/*" , "/unblockReservations/*" , "/myRestaurants/*" , "/restorerMoreInfo/*",
-                "/accept/*", "/decline/*", "/block/*", "/unblock/*");
+                "/accept/*", "/decline/*", "/block/*", "/unblock/*", "/delete/*", "/deletePromotion/*");
 
         return registrationBean;
     }

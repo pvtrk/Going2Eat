@@ -14,6 +14,6 @@ public interface IReservationDAO {
     List<Reservation> getWaitingReservationsForRestaurant(int id);
     List<Reservation> getAcceptedReservationsForRestaurant(int id);
     List<Reservation> getDeclinedReservationsForRestaurant(int id);
-
+    List<Reservation> getCanceledReservationsForRestaurant(int id);
 
 }

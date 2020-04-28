@@ -134,6 +134,11 @@ public class ReservationServiceImpl implements IReservationService {
         return reservationDAO.getDeclinedReservationsForRestaurant(id);
     }
 
+    @Override
+    public List<Reservation> getCanceledReservationsForRestaurant(int id) {
+        return reservationDAO.getCanceledReservationsForRestaurant(id);
+    }
+
     private LocalDateTime parseStringToDate(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return LocalDateTime.parse(dateString, formatter);

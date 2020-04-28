@@ -9,5 +9,6 @@ public interface IPromotionDAO {
     Promotion getPromotionById(int id);
     List<Promotion> getPromotionsSortedByDate();
     List<Promotion> getAllPromotions();
+    List<Promotion> getPromotionsByRestaurantId(int id);
 
 }

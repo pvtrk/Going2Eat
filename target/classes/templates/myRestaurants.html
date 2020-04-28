@@ -49,6 +49,11 @@
                         </form>
 
                         <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
+                              th:action="${'/deletePromotion/' + restaurant.id}">
+                            <input type="submit" class="btn btn-primary" value="Usuń promocję">
+                        </form>
+
+                        <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
                               th:action="${'/blockReservations/' + restaurant.id}">
                             <input type="submit" class="btn btn-primary" value="Zablokuj rezerwacje">
                         </form>

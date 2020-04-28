@@ -21,6 +21,15 @@ public class UserController {
 
     @GetMapping(value="/login")
     public String showLoginScreen() {
+        if(sessionObject.isLogged()) {
+            if (sessionObject.getUser().getRole().equals(UserRole.USER)) {
+                return "redirect:/main";
+            } else if (sessionObject.getUser().getRole().equals(UserRole.RESTORER)) {
+                return "redirect:/restorerMain";
+            } else if (sessionObject.getUser().getRole().equals(UserRole.ADMIN)) {
+                return "redirect:/adminMenu";
+            }
+        }
         return "login";
     }
 

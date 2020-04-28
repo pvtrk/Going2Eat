@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Going2Eat</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/restaurant.css}">
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<div th:replace="restorerFragments.html :: menu"></div>
+
+<div class="container">
+
+    <div th:replace="logoFragment.html ::logo"></div>
+
+    <div id="content">
+        <div id="accordion">
+
+            <div class="card" th:each="promotion : ${promotions}">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#collapseOne" th:text="${promotion.restaurant.name}" style="color:#000;">
+                    </a>
+                </div>
+                <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                    <div class="card-body">
+                        <span th:text="${promotion.description}"></span><br>
+                        <span th:text="${promotion.startDate}"></span></a><br>
+                        <span th:text="${promotion.endDate}"></span></a><br>
+
+                        <form th:action="${'/delete/' + promotion.id}" th:method="POST">
+                            <input type="submit" class="btn btn-success" value="Usuń">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div th:replace="footer.html :: footer"></div>
+</body>
+</html>

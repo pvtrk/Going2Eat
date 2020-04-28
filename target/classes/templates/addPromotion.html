@@ -44,6 +44,12 @@
                 <label for="formEndDate">Czas zakończenia promocji</label>
                 <div id="formEndDate" th:replace="promotionsDatepicker.html :: promotionsDatepicker2"></div>
             </div>
+            <div class="form-group">
+                <select class="form-control form-control-sm" th:field="*{promotion.distinction}">
+                    <option th:value="${false}">Standardowa</option>
+                    <option th:value="${true}">Wyróżniona</option>
+                </select>
+            </div>
             <input type="submit" class="btn btn-primary" value="Zatwierdź">
         </form>
     </div>

@@ -77,4 +77,10 @@ public class ReservationDAOImpl implements IReservationDAO {
         Session session = sessionFactory.openSession();
         return session.createQuery("FROM treservation WHERE restaurantId = " + id + "AND reservationStatus = " + "'DECLINED'").list();
     }
+
+    @Override
+    public List<Reservation> getCanceledReservationsForRestaurant(int id) {
+        Session session = sessionFactory.openSession();
+        return session.createQuery("FROM treservation WHERE restaurantId = " + id + "AND reservationStatus = 'CANCELED'").list();
+    }
 }
