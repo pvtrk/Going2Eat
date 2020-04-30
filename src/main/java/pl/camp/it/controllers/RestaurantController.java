@@ -204,4 +204,14 @@ public class RestaurantController {
         model.addAttribute("restaurant", restaurant);
         return "restorerMoreInfo";
     }
+
+    @GetMapping(value="/block/{id}")
+    public String blockRestaurant(@PathVariable int id) {
+        Restaurant restaurant = this.restaurantService.getRestaurantById(id);
+            if (restaurant != null) {
+                restaurant.setRestaurantStatus(RestaurantStatus.OFF);
+                this.restaurantService.persistRestaurant(restaurant);
+            }
+        return "redirect:/myRestaurants";
+    }
 }

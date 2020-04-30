@@ -23,6 +23,7 @@ public class RestaurantDAOImpl implements IRestaurantDAO {
             Session session = sessionFactory.openSession();
             tx = session.beginTransaction();
             session.saveOrUpdate(restaurant);
+            session.flush();
             tx.commit();
             session.close();
         } catch (Exception e) {
