@@ -17,11 +17,8 @@ public class BlockadeDAOImpl implements IBlockadeDAO {
     public void persistBlockade(Blockade blockade) {
         Transaction tx = null;
         try {
-            Session session = sessionFactory.openSession();
-            tx = session.beginTransaction();
-            session.saveOrUpdate(blockade);
-            tx.commit();
-            session.close();
+            Session session = sessionFactory.getCurrentSession();
+            session.merge(blockade);
         } catch(Exception e) {
             if (tx != null) {
                 tx.rollback();

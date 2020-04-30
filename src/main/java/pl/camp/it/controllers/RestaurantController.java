@@ -205,13 +205,23 @@ public class RestaurantController {
         return "restorerMoreInfo";
     }
 
-    @GetMapping(value="/block/{id}")
+    @GetMapping(value="/blckRest/{id}")
     public String blockRestaurant(@PathVariable int id) {
         Restaurant restaurant = this.restaurantService.getRestaurantById(id);
             if (restaurant != null) {
                 restaurant.setRestaurantStatus(RestaurantStatus.OFF);
                 this.restaurantService.persistRestaurant(restaurant);
             }
+        return "redirect:/myRestaurants";
+    }
+
+    @GetMapping(value="/unblckRest/{id}")
+    public String unblockRestaurant(@PathVariable int id) {
+        Restaurant restaurant = this.restaurantService.getRestaurantById(id);
+        if (restaurant != null) {
+            restaurant.setRestaurantStatus(RestaurantStatus.ACTIVE);
+            this.restaurantService.persistRestaurant(restaurant);
+        }
         return "redirect:/myRestaurants";
     }
 }

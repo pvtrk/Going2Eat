@@ -4,7 +4,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
+
 import org.springframework.web.context.annotation.SessionScope;
 import pl.camp.it.filters.AdminFilter;
 import pl.camp.it.filters.RestorerFilter;
@@ -33,7 +33,7 @@ public class AppConfiguration {
         registrationBean.addUrlPatterns("/restorerMain/*", "/restorerReservations/*",
                 "/restorerAllRestaurants/*" , "/addRestaurant/*" , "/addPromotion/*" ,
                 "/blockReservations/*" , "/unblockReservations/*" , "/myRestaurants/*" , "/restorerMoreInfo/*",
-                "/accept/*", "/decline/*", "/block/*", "/unblock/*", "/delete/*", "/deletePromotion/*");
+                "/accept/*", "/decline/*", "/block/*", "/unblock/*", "/delete/*", "/deletePromotion/*", "/blckRest/*");
 
         return registrationBean;
     }

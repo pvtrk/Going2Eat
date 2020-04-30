@@ -34,12 +34,12 @@
                         <span>Status: </span><span th:text="${restaurant.restaurantStatus.displayValue}"></span><br>
 
                         <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
-                              th:action="${'/block/' + restaurant.id}">
+                              th:action="${'/blckRest/' + restaurant.id}" method="get">
                             <input type="submit" class="btn btn-danger" value="Usuń">
                         </form>
 
                         <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).OFF}"
-                              th:action="${'/unblock/' + restaurant.id}">
+                              th:action="${'/unblckRest/' + restaurant.id}">
                             <input type="submit" class="btn btn-success" value="Odblokuj">
                         </form>
 

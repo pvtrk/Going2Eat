@@ -21,7 +21,7 @@ public class RestaurantServiceImpl implements IRestaurantService {
     IRestaurantDAO restaurantDAO;
     @Override
     public void persistRestaurant(Restaurant restaurant) {
-        this.restaurantDAO.persistRestaurant(restaurant);
+        restaurantDAO.persistRestaurant(restaurant);
     }
 
     @Override

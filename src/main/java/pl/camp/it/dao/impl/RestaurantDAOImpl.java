@@ -48,7 +48,9 @@ public class RestaurantDAOImpl implements IRestaurantDAO {
     @Override
     public Restaurant getRestaurantById(int id) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM trestaurant WHERE id = " + id, Restaurant.class).uniqueResult();
+        Restaurant restaurant =  session.createQuery("FROM trestaurant WHERE id = " + id, Restaurant.class).uniqueResult();
+        session.close();
+        return restaurant;
     }
 
     @Override

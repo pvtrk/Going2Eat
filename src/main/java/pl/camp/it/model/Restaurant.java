@@ -107,6 +107,14 @@ public class Restaurant {
         this.promotions = promotions;
     }
 
+    public List<Blockade> getBlockades() {
+        return blockades;
+    }
+
+    public void setBlockades(List<Blockade> blockades) {
+        this.blockades = blockades;
+    }
+
     public static void autoValidateRestaurant(Restaurant restaurant) {
         if(restaurant == null) {
             throw new RestaurantValidationException();
