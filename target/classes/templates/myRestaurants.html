@@ -35,7 +35,7 @@
 
                         <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
                               th:action="${'/blckRest/' + restaurant.id}" method="get">
-                            <input type="submit" class="btn btn-danger" value="Usuń">
+                            <input type="submit" class="btn btn-danger" value="Usuń"> <h3>Funkcja automatycznie usuwa wszystkie promocje i anuluje rezerwacje nieodwracalnie.</h3>
                         </form>
 
                         <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).OFF}"

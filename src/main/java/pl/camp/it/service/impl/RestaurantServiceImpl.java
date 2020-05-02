@@ -4,11 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 import pl.camp.it.dao.IRestaurantDAO;
-import pl.camp.it.model.Restaurant;
+import pl.camp.it.model.*;
+import pl.camp.it.service.IPromotionService;
+import pl.camp.it.service.IReservationService;
 import pl.camp.it.service.IRestaurantService;
 import pl.camp.it.session.SessionObject;
 import pl.camp.it.utils.RegexChecker;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,6 +22,10 @@ public class RestaurantServiceImpl implements IRestaurantService {
     SessionObject sessionObject;
     @Autowired
     IRestaurantDAO restaurantDAO;
+    @Autowired
+    IPromotionService promotionService;
+    @Autowired
+    IReservationService reservationService;
     @Override
     public void persistRestaurant(Restaurant restaurant) {
         restaurantDAO.persistRestaurant(restaurant);
@@ -86,6 +93,25 @@ public class RestaurantServiceImpl implements IRestaurantService {
                 }
             }
         } return false;
+    }
+
+    @Override
+    public void deleteRestaurantsPromotionsAndReservations(Restaurant restaurant) {
+        if(restaurant != null) {
+            List<Promotion> promotions = promotionService.getPromotionsByRestaurantId(restaurant.getId());
+            for(Promotion promotion : promotions) {
+                promotion.setStatus(PromotionStatus.OFF);
+                promotionService.persistPromotion(promotion);
+            }
+            List<Reservation> reservations = reservationService.getReservationsByRestaurantId(restaurant.getId());
+            for(Reservation reservation : reservations) {
+                if(reservation.getStartTime().isAfter(LocalDateTime.now())) {
+                    reservation.setReservationStatus(ReservationStatus.CANCELED);
+                    reservationService.persistReservation(reservation);
+                }
+            }
+        }
+
     }
 
 

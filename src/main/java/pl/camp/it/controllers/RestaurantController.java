@@ -210,6 +210,7 @@ public class RestaurantController {
         Restaurant restaurant = this.restaurantService.getRestaurantById(id);
             if (restaurant != null) {
                 restaurant.setRestaurantStatus(RestaurantStatus.OFF);
+                restaurantService.deleteRestaurantsPromotionsAndReservations(restaurant);
                 this.restaurantService.persistRestaurant(restaurant);
             }
         return "redirect:/myRestaurants";
