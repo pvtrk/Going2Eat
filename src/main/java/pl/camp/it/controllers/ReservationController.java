@@ -43,15 +43,19 @@ public class ReservationController {
                                     @RequestParam int guestsNumber, @RequestParam String comments, Model model) {
 
         Restaurant restaurant = this.restaurantService.getRestaurantById(id);
-        if(!this.reservationService.isBlocked(restaurant.getId(), localDateTime)) {
-            boolean isDone = this.reservationService.doComplexReservationAction(restaurant, guestsNumber, comments, localDateTime);
-            if (isDone) {
-                model.addAttribute("message", "Gratulacje, udało Ci się dokonać rezerwacji!");
+        if(restaurant.getRestaurantStatus().equals(RestaurantStatus.ACTIVE)) {
+            if (!this.reservationService.isBlocked(restaurant.getId(), localDateTime)) {
+                boolean isDone = this.reservationService.doComplexReservationAction(restaurant, guestsNumber, comments, localDateTime);
+                if (isDone) {
+                    model.addAttribute("message", "Gratulacje, udało Ci się dokonać rezerwacji!");
+                } else {
+                    model.addAttribute("message", "Niestety nie udało się zrobić rezerwacji");
+                }
             } else {
-                model.addAttribute("message", "Niestety nie udało się zrobić rezerwacji");
+                model.addAttribute("message", "Restauracja w tym okresie nie przyjmuje żadnych rezerwacji");
             }
         } else {
-            model.addAttribute("message", "Restauracja w tym okresie nie przyjmuje żadnych rezerwacji");
+            model.addAttribute("message", "Restauracja zawiesiła swoją działalność.");
         }
         return "reservation";
     }
