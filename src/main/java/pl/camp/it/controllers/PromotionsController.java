@@ -12,6 +12,7 @@ import pl.camp.it.model.Restaurant;
 import pl.camp.it.service.IPromotionService;
 import pl.camp.it.service.IRestaurantService;
 import pl.camp.it.service.impl.PageService;
+import pl.camp.it.utils.RegexChecker;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +26,8 @@ import java.util.stream.IntStream;
 public class PromotionsController {
     @Autowired
     IRestaurantService restaurantService;
+    @Autowired
+    RegexChecker regexChecker;
     @Autowired
     PageService pageService;
     @Autowired
@@ -76,7 +79,9 @@ public class PromotionsController {
         Restaurant restaurant = this.restaurantService.getRestaurantById(id);
         if (promotion != null) {
             promotion.setRestaurant(restaurant);
-            if (promotionService.createPromotion(promotion, date1, date2)) {
+            if (regexChecker.checkInput(date1, regexChecker.getDateRegexp()) &&
+                    regexChecker.checkInput(date2, regexChecker.getDateRegexp()) &&
+                    promotionService.createPromotion(promotion, date1, date2)) {
                 model.addAttribute("message", "Dodano promocję!");
             } else {
                 model.addAttribute("message", "Nie udało się dodać promocji.");

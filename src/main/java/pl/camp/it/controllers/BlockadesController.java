@@ -13,6 +13,7 @@ import pl.camp.it.service.IBlockadeService;
 import pl.camp.it.service.IRestaurantService;
 import pl.camp.it.service.IUserService;
 import pl.camp.it.session.SessionObject;
+import pl.camp.it.utils.RegexChecker;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +26,8 @@ public class BlockadesController {
     @Autowired
     IRestaurantService restaurantService;
     @Autowired
+    RegexChecker regexChecker;
+    @Autowired
     IBlockadeService blockadeService;
 
     @GetMapping(value="/blockReservations/{id}")
@@ -35,7 +38,11 @@ public class BlockadesController {
     @PostMapping(value="/blockReservations/{id}")
     public String blockReservations(@PathVariable int id, @RequestParam String dateStart,
                                     @RequestParam String dateEnd, Model model) {
-        boolean blockAction = blockadeService.createBlockade(id, dateStart, dateEnd);
+        boolean blockAction = false;
+        if(regexChecker.checkInput(dateStart, regexChecker.getDateTimeRegexp())
+                && regexChecker.checkInput(dateEnd, regexChecker.getDateTimeRegexp())) {
+            blockAction = blockadeService.createBlockade(id, dateStart, dateEnd);
+        }
         if(blockAction) {
             model.addAttribute("message", "Udało Ci się zablokować rezerwacje");
         } else {

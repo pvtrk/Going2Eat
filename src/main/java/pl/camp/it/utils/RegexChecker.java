@@ -14,6 +14,8 @@ public class RegexChecker {
     private final String descriptionRegex = "^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9_@.\\/#&*!+-.\\s]{5,150}$";
     private final String placesQuantityRegex ="^[1-9]{1}[0-9]{0,2}$";
     private final String priceRegex = "^[1-9]{1}[0-9]{0,6}$";
+    private final String dateRegexp = "^[2]{1}[0]{1}[2-4]{1}[0-9]{1}[-]{1}[0-1]{1}[0-9]{1}[-]{1}[0-3]{1}[0-9]{1}$";
+    private final String dateTimeRegexp = "^[2]{1}[0]{1}[2-4]{1}[0-9]{1}[-]{1}[0-1]{1}[0-9]{1}[-]{1}[0-3]{1}[0-9]{1}[\\s]{1}[1-2]{1}[0-9]{1}[:]{1}[0-5]{1}[0-9]{1}$";
 
     public boolean checkInput(String input, String regex) {
         if (input.matches(regex)) {
@@ -59,5 +61,13 @@ public class RegexChecker {
 
     public String getRestaurantCuisineRegex() {
         return restaurantCuisineRegex;
+    }
+
+    public String getDateRegexp() {
+        return dateRegexp;
+    }
+
+    public String getDateTimeRegexp() {
+        return dateTimeRegexp;
     }
 }

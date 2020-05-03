@@ -14,6 +14,7 @@ import pl.camp.it.service.IReservationService;
 import pl.camp.it.service.IRestaurantService;
 import pl.camp.it.service.impl.PageService;
 import pl.camp.it.session.SessionObject;
+import pl.camp.it.utils.RegexChecker;
 
 
 import java.util.List;
@@ -30,6 +31,8 @@ public class ReservationController {
     @Autowired
     IRestaurantService restaurantService;
     @Autowired
+    RegexChecker regexChecker;
+    @Autowired
     SessionObject sessionObject;
 
     @GetMapping(value="/makeReservation/{id}")
@@ -43,7 +46,10 @@ public class ReservationController {
                                     @RequestParam int guestsNumber, @RequestParam String comments, Model model) {
 
         Restaurant restaurant = this.restaurantService.getRestaurantById(id);
-        if(restaurant.getRestaurantStatus().equals(RestaurantStatus.ACTIVE)) {
+        Restaurant.autoValidateRestaurant(restaurant);
+        boolean isDateOk = regexChecker.checkInput(localDateTime, regexChecker.getDateTimeRegexp());
+
+        if(restaurant.getRestaurantStatus().equals(RestaurantStatus.ACTIVE) && isDateOk) {
             if (!this.reservationService.isBlocked(restaurant.getId(), localDateTime)) {
                 boolean isDone = this.reservationService.doComplexReservationAction(restaurant, guestsNumber, comments, localDateTime);
                 if (isDone) {
@@ -55,7 +61,7 @@ public class ReservationController {
                 model.addAttribute("message", "Restauracja w tym okresie nie przyjmuje żadnych rezerwacji");
             }
         } else {
-            model.addAttribute("message", "Restauracja zawiesiła swoją działalność.");
+            model.addAttribute("message", "Restauracja zawiesiła swoją działalność, lub wprowadzona data jest nieprawidłowa.");
         }
         return "reservation";
     }
