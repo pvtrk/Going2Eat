@@ -62,10 +62,11 @@ public class BlockadesController {
     }
     @PostMapping(value="/unblck/{id}")
     public String unblockReservation(@PathVariable int id) {
-
         Blockade blck = this.blockadeService.getBlockadeById(id);
-        blck.setActive(false);
-        this.blockadeService.persistBlockade(blck);
+        if (blck != null) {
+            blck.setActive(false);
+            this.blockadeService.persistBlockade(blck);
+        }
 
         return "redirect:/myRestaurants";
     }

@@ -102,8 +102,10 @@ public class PromotionsController {
     @PostMapping(value ="/delete/{id}")
     public String deletePromotionAction(@PathVariable int id) {
         Promotion promotion = promotionService.getPromotionById(id);
-        promotion.setStatus(PromotionStatus.OFF);
-        promotionService.persistPromotion(promotion);
+        if (promotion != null) {
+            promotion.setStatus(PromotionStatus.OFF);
+            promotionService.persistPromotion(promotion);
+        }
         return "redirect:/myRestaurants";
     }
 }

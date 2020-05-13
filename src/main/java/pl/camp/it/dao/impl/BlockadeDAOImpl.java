@@ -17,8 +17,11 @@ public class BlockadeDAOImpl implements IBlockadeDAO {
     public void persistBlockade(Blockade blockade) {
         Transaction tx = null;
         try {
-            Session session = sessionFactory.getCurrentSession();
-            session.merge(blockade);
+            Session session = sessionFactory.openSession();
+            tx = session.beginTransaction();
+            session.saveOrUpdate(blockade);
+            tx.commit();
+            session.close();
         } catch(Exception e) {
             if (tx != null) {
                 tx.rollback();
@@ -29,18 +32,24 @@ public class BlockadeDAOImpl implements IBlockadeDAO {
     @Override
     public Blockade getBlockadeById(int id) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM tblockade WHERE id = " + id, Blockade.class).uniqueResult();
+        Blockade blockade = session.createQuery("FROM tblockade WHERE id = " + id, Blockade.class).uniqueResult();
+        session.close();
+        return blockade;
     }
 
     @Override
     public List<Blockade> getBlockadesByRestaurantId(int id) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM tblockade WHERE restaurantId = " + id).list();
+        List<Blockade> blockades = session.createQuery("FROM tblockade WHERE restaurantId = " + id).list();
+        session.close();
+        return blockades;
     }
 
     @Override
     public List<Blockade> getActiveBlockadesForRestaurant(int id) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM tblockade WHERE restaurantId = " + id + "AND active = " + 1).list();
+        List<Blockade> blockades = session.createQuery("FROM tblockade WHERE restaurantId = " + id + "AND active = " + 1).list();
+        session.close();
+        return blockades;
     }
 }

@@ -33,24 +33,32 @@ public class PromotionDAOImpl implements IPromotionDAO {
     @Override
     public Promotion getPromotionById(int id) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM tpromotion WHERE id = " + id, Promotion.class).uniqueResult();
+        Promotion promotion = session.createQuery("FROM tpromotion WHERE id = " + id, Promotion.class).uniqueResult();
+        session.close();
+        return promotion;
     }
 
     @Override
     public List<Promotion> getPromotionsSortedByDate() {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM tpromotion WHERE status = 'ACTIVE' ORDER BY startDate").list();
+        List<Promotion> promotions =  session.createQuery("FROM tpromotion WHERE status = 'ACTIVE' ORDER BY startDate").list();
+        session.close();
+        return promotions;
     }
 
     @Override
     public List<Promotion> getAllPromotions() {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM tpromotion WHERE status = 'ACTIVE'").list();
+        List<Promotion> promotions =  session.createQuery("FROM tpromotion WHERE status = 'ACTIVE'").list();
+        session.close();
+        return promotions;
     }
 
     @Override
     public List<Promotion> getPromotionsByRestaurantId(int id) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM tpromotion WHERE status = 'ACTIVE' AND restaurantId = " + id).list();
+        List<Promotion> promotions =  session.createQuery("FROM tpromotion WHERE status = 'ACTIVE' AND restaurantId = " + id).list();
+        session.close();
+        return promotions;
     }
 }

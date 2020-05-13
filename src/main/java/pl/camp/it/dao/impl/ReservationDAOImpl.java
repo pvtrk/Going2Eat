@@ -33,25 +33,33 @@ public class ReservationDAOImpl implements IReservationDAO {
     @Override
     public Reservation getReservationById(int id) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM treservation WHERE id = " + id, Reservation.class).uniqueResult();
+        Reservation reservation = session.createQuery("FROM treservation WHERE id = " + id, Reservation.class).uniqueResult();
+        session.close();
+        return reservation;
     }
 
     @Override
     public List<Reservation> getAllReservations() {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM treservation").list();
+        List<Reservation> reservations = session.createQuery("FROM treservation").list();
+        session.close();
+        return reservations;
     }
 
     @Override
     public List<Reservation> getReservationsByUserId(int id) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM treservation WHERE userId = " + id).list();
+        List<Reservation> reservations = session.createQuery("FROM treservation WHERE userId = " + id).list();
+        session.close();
+        return reservations;
     }
 
     @Override
     public List<Reservation> getReservationsByRestaurantId(int id) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM treservation WHERE restaurantId = " + id).list();
+        List<Reservation> reservations = session.createQuery("FROM treservation WHERE restaurantId = " + id).list();
+        session.close();
+        return reservations;
     }
 
     @Override
@@ -63,24 +71,36 @@ public class ReservationDAOImpl implements IReservationDAO {
     @Override
     public List<Reservation> getWaitingReservationsForRestaurant(int id) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM treservation WHERE restaurantId = " + id + "AND reservationStatus = " + "'WAITING'").list();
+        List<Reservation> reservations = session.createQuery
+                ("FROM treservation WHERE restaurantId = " + id + "AND reservationStatus = " + "'WAITING'").list();
+        session.close();
+        return reservations;
     }
 
     @Override
     public List<Reservation> getAcceptedReservationsForRestaurant(int id) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM treservation WHERE restaurantId = " + id + "AND reservationStatus = " + "'ACCEPTED'").list();
+        List<Reservation> reservations = session.createQuery
+                ("FROM treservation WHERE restaurantId = " + id + "AND reservationStatus = " + "'ACCEPTED'").list();
+        session.close();
+        return reservations;
     }
 
     @Override
     public List<Reservation> getDeclinedReservationsForRestaurant(int id) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM treservation WHERE restaurantId = " + id + "AND reservationStatus = " + "'DECLINED'").list();
+        List<Reservation> reservations = session.createQuery
+                ("FROM treservation WHERE restaurantId = " + id + "AND reservationStatus = " + "'DECLINED'").list();
+        session.close();
+        return reservations;
     }
 
     @Override
     public List<Reservation> getCanceledReservationsForRestaurant(int id) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM treservation WHERE restaurantId = " + id + "AND reservationStatus = 'CANCELED'").list();
+        List<Reservation> reservations = session.createQuery
+                ("FROM treservation WHERE restaurantId = " + id + "AND reservationStatus = 'CANCELED'").list();
+        session.close();
+        return reservations;
     }
 }

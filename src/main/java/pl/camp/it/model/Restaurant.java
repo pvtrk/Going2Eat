@@ -26,6 +26,7 @@ public class Restaurant {
     private List<Blockade> blockades;
 
 
+
     public int getId() {
         return id;
     }

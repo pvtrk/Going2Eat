@@ -32,7 +32,7 @@ public class AppConfiguration {
         registrationBean.setFilter(new RestorerFilter());
         registrationBean.addUrlPatterns("/restorerMain/*", "/restorerReservations/*",
                 "/restorerAllRestaurants/*" , "/addRestaurant/*" , "/addPromotion/*" ,
-                "/blockReservations/*" , "/unblockReservations/*" , "/myRestaurants/*" , "/restorerMoreInfo/*",
+                "/blockReservations/*" , "/unblockReservations/*" , "/unblck/*", "/myRestaurants/*" , "/restorerMoreInfo/*",
                 "/accept/*", "/decline/*", "/block/*", "/unblock/*", "/delete/*", "/deletePromotion/*", "/blckRest/*",
                 "/unblckRest/*");
 

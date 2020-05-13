@@ -49,7 +49,7 @@ public class BlockadeServiceImpl implements IBlockadeService {
         blck.setActive(true);
         Restaurant restaurant = this.restaurantService.getRestaurantById(restaurantId);
         if (restaurant != null) {
-            blck.setRestaurant(this.restaurantService.getRestaurantById(restaurantId));
+            blck.setRestaurant(restaurant);
         }
         if(sessionObject.getUser() != null) {
             blck.setUserId(sessionObject.getUser().getId());

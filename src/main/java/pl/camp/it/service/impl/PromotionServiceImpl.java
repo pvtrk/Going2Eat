@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PromotionServiceImpl implements IPromotionService {
@@ -37,33 +38,15 @@ public class PromotionServiceImpl implements IPromotionService {
     @Override
     public List<Promotion> getDistinctedPromotions() {
         List<Promotion> promotions = this.promotionDAO.getAllPromotions();
-        List<Promotion> result = new ArrayList<>();
-        for (Promotion promotion : promotions) {
-            if(promotion.isDistinction()) {
-                result.add(promotion);
-            }
-        }
+        ArrayList<Promotion> result = promotions.stream()
+                .filter(x -> x.isDistinction())
+                .collect(Collectors.toCollection(ArrayList::new));
         return result;
     }
 
     @Override
     public List<Promotion> getPromotionsByRestaurantId(int id) {
         return this.promotionDAO.getPromotionsByRestaurantId(id);
-    }
-
-
-    private boolean validatePromotionInput(Promotion promotion) {
-        if (promotion != null) {
-            if ((promotion.getDescription() != null) &&
-                    regexChecker.checkInput(promotion.getDescription(), regexChecker.getDescriptionRegex())) {
-                if ((promotion.getPrice() != 0) && (promotion.getPrice() > 0 && promotion.getPrice() <= 999)) {
-                    if (promotion.getRestaurant() != null) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
     }
 
     @Override
@@ -78,5 +61,19 @@ public class PromotionServiceImpl implements IPromotionService {
                 return true;
             }
         } return false;
+    }
+
+    private boolean validatePromotionInput(Promotion promotion) {
+        if (promotion != null) {
+            if ((promotion.getDescription() != null) &&
+                    regexChecker.checkInput(promotion.getDescription(), regexChecker.getDescriptionRegex())) {
+                if ((promotion.getPrice() != 0) && (promotion.getPrice() > 0 && promotion.getPrice() <= 999)) {
+                    if (promotion.getRestaurant() != null) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

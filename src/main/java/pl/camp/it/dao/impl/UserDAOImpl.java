@@ -33,18 +33,24 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public List<User> getAllUsers() {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM tuser").list();
+        List<User> users =  session.createQuery("FROM tuser").list();
+        session.close();
+        return users;
     }
 
     @Override
     public User getUserByLogin(String login) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM tuser WHERE login ='" + login + "'", User.class).uniqueResult();
+        User user = session.createQuery("FROM tuser WHERE login ='" + login + "'", User.class).uniqueResult();
+        session.close();
+        return user;
     }
 
     @Override
     public User getUserById(int id) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM tuser WHERE id = "+ id, User.class).uniqueResult();
+        User user = session.createQuery("FROM tuser WHERE id = "+ id, User.class).uniqueResult();
+        session.close();
+        return user;
     }
 }

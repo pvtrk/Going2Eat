@@ -36,13 +36,17 @@ public class RestaurantDAOImpl implements IRestaurantDAO {
     @Override
     public List<Restaurant> getAllRestaurants() {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM trestaurant").list();
+        List<Restaurant> restaurants = session.createQuery("FROM trestaurant").list();
+        session.close();
+        return restaurants;
     }
 
     @Override
     public List<Restaurant> getRestaurantsByUserId(int id) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM trestaurant WHERE userId = " + id).list();
+        List<Restaurant> restaurants = session.createQuery("FROM trestaurant WHERE userId = " + id).list();
+        session.close();
+        return restaurants;
     }
 
     @Override
@@ -77,12 +81,15 @@ public class RestaurantDAOImpl implements IRestaurantDAO {
         for(Integer i : restaurantId) {
             result.add(this.getRestaurantById(i));
         }
+        session.close();
         return result;
     }
 
     @Override
     public List<Restaurant> getActiveRestaurants() {
         Session session = sessionFactory.openSession();
-        return session.createQuery("FROM trestaurant WHERE restaurantStatus = 'ACTIVE'").list();
+        List<Restaurant> restaurants = session.createQuery("FROM trestaurant WHERE restaurantStatus = 'ACTIVE'").list();
+        session.close();
+        return restaurants;
     }
 }
