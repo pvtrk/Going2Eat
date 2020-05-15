@@ -1,10 +1,11 @@
 package pl.camp.it.service.impl;
 
-import org.apache.tomcat.jni.Local;
-import org.hibernate.Session;
 
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.config.IntervalTask;
+
 import org.springframework.stereotype.Service;
 import pl.camp.it.dao.IReservationDAO;
 import pl.camp.it.dao.IRestaurantDAO;
@@ -12,12 +13,14 @@ import pl.camp.it.model.*;
 import pl.camp.it.service.IBlockadeService;
 import pl.camp.it.service.IReservationService;
 import pl.camp.it.session.SessionObject;
+import pl.camp.it.utils.RegexChecker;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Comparator;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationServiceImpl implements IReservationService {
@@ -29,6 +32,10 @@ public class ReservationServiceImpl implements IReservationService {
     IReservationService reservationService;
     @Autowired
     IBlockadeService blockadeService;
+    @Autowired
+    SessionFactory sessionFactory;
+    @Autowired
+    RegexChecker regexChecker;
     @Autowired
     SessionObject sessionObject;
 
@@ -65,8 +72,24 @@ public class ReservationServiceImpl implements IReservationService {
 
     @Override
     public List<Reservation> getReservationsForRestorer(User restorer) {
+        Session session = sessionFactory.openSession();
         List<Restaurant> restaurants = this.restaurantDAO.getRestaurantsByUserId(restorer.getId());
-        List<Reservation> result = new ArrayList<>();
+        ArrayList<Reservation> result = restaurants.stream()
+                .map(x -> {
+                    List<Reservation> reservationList = session.createQuery("FROM treservation WHERE restaurantId = " + x.getId()).list();
+                    return reservationList;
+                })
+                .flatMap(list -> list.stream())
+                .sorted((r1, r2) -> {
+                    if(r1.getReservationStatus().getNumberValue() - r2.getReservationStatus().getNumberValue() !=0) {
+                        return r1.getReservationStatus().getNumberValue() - r2.getReservationStatus().getNumberValue();
+                    } else {
+                        return r1.getRestaurantName().compareTo(r2.getRestaurantName());
+                    }
+                })
+                .collect(Collectors.toCollection(ArrayList::new));
+        session.close();
+        /*List<Reservation> result = new ArrayList<>();
         for(Restaurant restaurant : restaurants) {
             result.addAll(this.reservationDAO.getReservationsByRestaurantId(restaurant.getId()));
         }
@@ -79,20 +102,20 @@ public class ReservationServiceImpl implements IReservationService {
 
                 } return r1.getRestaurantName().compareTo(r2.getRestaurantName());
             }
-        });
+        }); */
         return result;
     }
 
     @Override
     public boolean doComplexReservationAction(Restaurant restaurant, int guestsNumber,
                                            String comments, String reservationStartTime) {
+
         LocalDateTime startTime = parseStringToDate(reservationStartTime);
 
         int freePlaces = (restaurant.getPlaces()) -
                 (getBookedPlaces(restaurant.getId(), startTime));
 
         if (freePlaces > guestsNumber) {
-
             createReservation(restaurant,
                     guestsNumber, comments, startTime);
             return true;
@@ -103,6 +126,7 @@ public class ReservationServiceImpl implements IReservationService {
 
     @Override
     public boolean isBlocked(int restaurantId, String startTime) {
+
         LocalDateTime start = parseStringToDate(startTime);
         LocalDateTime end = start.plusHours(2);
 
@@ -162,8 +186,7 @@ public class ReservationServiceImpl implements IReservationService {
                                    String comments, LocalDateTime startTime) {
         Reservation reservation = new Reservation();
         reservation.setUserId(sessionObject.getUser().getId());
-        reservation.setRestaurantId(restaurant.getId());
-        reservation.setRestaurantName(restaurant.getName());
+        reservation.setRestaurant(restaurant);
         reservation.setGuestsQuantity(guestNumber);
         reservation.setReservationStatus(ReservationStatus.WAITING);
         reservation.setComments(comments);

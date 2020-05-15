@@ -1,6 +1,8 @@
 package pl.camp.it.model;
 
 
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,8 @@ public class Restaurant {
     private List<Promotion> promotions;
     @OneToMany(mappedBy = "restaurant")
     private List<Blockade> blockades;
-
+    @OneToMany(mappedBy = "restaurant")
+    private List<Reservation> reservations;
 
 
     public int getId() {
@@ -61,6 +64,14 @@ public class Restaurant {
 
     public int getPlaces() {
         return places;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
     public void setPlaces(int places) {
@@ -137,7 +148,7 @@ public class Restaurant {
         }
     }
 
-    static class RestaurantValidationException extends RuntimeException {
+    public static class RestaurantValidationException extends RuntimeException {
 
     }
 }

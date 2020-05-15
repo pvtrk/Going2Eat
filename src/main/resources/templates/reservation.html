@@ -17,13 +17,13 @@
 <div class="container">
 
     <div th:replace="logoFragment.html :: logo"></div>
-    <h5 th:if="${message}" th:text="${message}"></h5>
+    <h5 class ="alert alert-primary" th:if="${message}" th:text="${message}"></h5>
     <div id="content">
         <form method="post">
         <div th:replace="datepicker.html :: datepicker"></div>
         <input type="number" placeholder="Ilość gości" name="guestsNumber">
         <input type="text" class="textarea" placeholder="Uwagi"
-               pattern="^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9_@.\/#&*!+-.\s]{5,150}$" name="comments">
+               pattern="^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9_@.\/#&*!+-,\s]{5,150}$" name="comments">
         <input type="submit" class="btn btn-primary" value="Zarezerwuj">
         </form>
     </div>

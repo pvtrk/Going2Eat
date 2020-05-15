@@ -10,8 +10,9 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int userId;
-    private int restaurantId;
-    private String restaurantName;
+    @ManyToOne
+    @JoinColumn(name="restaurantId")
+    private Restaurant restaurant;
     private int guestsQuantity;
     @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
@@ -32,20 +33,20 @@ public class Reservation {
         this.userId = userId;
     }
 
-    public int getRestaurantId() {
-        return restaurantId;
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     public String getRestaurantName() {
-        return restaurantName;
-    }
-
-    public void setRestaurantName(String restaurantName) {
-        this.restaurantName = restaurantName;
-    }
-
-    public void setRestaurantId(int restaurantId) {
-        this.restaurantId = restaurantId;
+        if(this.restaurant != null) {
+            return this.restaurant.getName();
+        } else {
+            return "Błąd";
+        }
     }
 
     public int getGuestsQuantity() {
@@ -100,29 +101,29 @@ public class Reservation {
 
     public static void autoValidateReservation(Reservation reservation) {
         if(reservation == null) {
-            throw new RestaurantValidationException();
+            throw new ReservationValidationException();
         }
         if(reservation.getRestaurantName() == null) {
-            throw new RestaurantValidationException();
+            throw new ReservationValidationException();
         }
         if(reservation.getReservationStatus() == null) {
-            throw new RestaurantValidationException();
+            throw new ReservationValidationException();
         }
         if(reservation.getGuestsQuantity() < 1 ) {
-            throw new RestaurantValidationException();
+            throw new ReservationValidationException();
         }
         if(reservation.getStartTime() == null) {
-            throw new RestaurantValidationException();
+            throw new ReservationValidationException();
         }
-        if(reservation.getRestaurantId() < 1) {
-            throw new RestaurantValidationException();
+        if(reservation.getRestaurant().getId() < 1) {
+            throw new ReservationValidationException();
         }
         if(reservation.getUserId() <1) {
-            throw new RestaurantValidationException();
+            throw new ReservationValidationException();
         }
     }
 
-    public static class RestaurantValidationException extends RuntimeException {
+    public static class ReservationValidationException extends RuntimeException {
 
     }
 }

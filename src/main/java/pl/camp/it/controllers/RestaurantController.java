@@ -25,8 +25,6 @@ public class RestaurantController {
     @Autowired
     IRestaurantService restaurantService;
     @Autowired
-    IUserService userService;
-    @Autowired
     SessionObject sessionObject;
 
     @GetMapping(value ="/restaurants")
@@ -117,16 +115,17 @@ public class RestaurantController {
     @PostMapping(value="/addRestaurant")
     public String addRestaurantAction(@ModelAttribute Restaurant restaurant, Model model) {
         if(restaurant != null) {
-        if (restaurantService.validateRestaurantInput(restaurant)) {
-            restaurant.setRestaurantStatus(RestaurantStatus.ACTIVE);
-            restaurant.setUserId(sessionObject.getUser().getId());
-            this.restaurantService.persistRestaurant(restaurant);
-        }
+            if (restaurantService.validateRestaurantInput(restaurant)) {
+                restaurant.setRestaurantStatus(RestaurantStatus.ACTIVE);
+                restaurant.setUserId(sessionObject.getUser().getId());
+                this.restaurantService.persistRestaurant(restaurant);
+                model.addAttribute("alert", "Gratulacje, stworzyłeś restaurację!");
+            }
         }else {
             model.addAttribute("alert", "Niepoprawnie wprowadzono dane restauracji.");
             return "addRestaurant";
         }
-       return "redirect:/myRestaurants";
+       return "addRestaurant";
     }
 
     @GetMapping(value="/myRestaurants")

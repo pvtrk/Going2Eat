@@ -22,12 +22,20 @@ public class HacksController {
     @GetMapping(value = "/170896")
     public String hackMyWorld() {
         User user = new User();
-        user.setLogin("admin1");
-        user.setPass(DigestUtils.md5Hex("admin1"));
+        user.setLogin("admin11");
+        user.setPass(DigestUtils.md5Hex("admin11"));
         user.setName("Patryk");
         user.setSurname("Łącki");
         user.setRole(UserRole.ADMIN);
         userService.persistUser(user);
+
+        User user2 = new User();
+        user2.setLogin("user11");
+        user2.setPass(DigestUtils.md5Hex("user11"));
+        user2.setName("Patrik");
+        user2.setSurname("Patrik");
+        user2.setRole(UserRole.USER);
+        userService.persistUser(user2);
         return "/login";
     }
 

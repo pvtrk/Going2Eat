@@ -77,7 +77,7 @@ public class PromotionsController {
     public String addingPromotionAction(@PathVariable int id, Model model, @ModelAttribute Promotion promotion,
                                         @RequestParam String date1, @RequestParam String date2) {
         Restaurant restaurant = this.restaurantService.getRestaurantById(id);
-        if (promotion != null) {
+        if (restaurant != null && promotion != null) {
             promotion.setRestaurant(restaurant);
             if (regexChecker.checkInput(date1, regexChecker.getDateRegexp()) &&
                     regexChecker.checkInput(date2, regexChecker.getDateRegexp()) &&

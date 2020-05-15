@@ -46,7 +46,11 @@ public class ReservationController {
                                     @RequestParam int guestsNumber, @RequestParam String comments, Model model) {
 
         Restaurant restaurant = this.restaurantService.getRestaurantById(id);
-        Restaurant.autoValidateRestaurant(restaurant);
+        try {
+            Restaurant.autoValidateRestaurant(restaurant);
+        } catch (Restaurant.RestaurantValidationException e) {
+            model.addAttribute("message", "Błąd, zła restauracja");
+        }
         boolean isDateOk = regexChecker.checkInput(localDateTime, regexChecker.getDateTimeRegexp());
 
         if(restaurant.getRestaurantStatus().equals(RestaurantStatus.ACTIVE) && isDateOk) {
@@ -98,8 +102,10 @@ public class ReservationController {
     @GetMapping(value="/cancel/{id}")
     public String cancelReservation(@PathVariable int id) {
         Reservation reservation = this.reservationService.getReservationById(id);
-        reservation.setReservationStatus(ReservationStatus.CANCELED);
-        this.reservationService.persistReservation(reservation);
+        if (reservation != null) {
+            reservation.setReservationStatus(ReservationStatus.CANCELED);
+            this.reservationService.persistReservation(reservation);
+        }
         return "redirect:/myReservations";
     }
 
@@ -137,8 +143,6 @@ public class ReservationController {
                 (PageRequest.of(currentPage - 1, pageSize), reservations );
         model.addAttribute("reservationsPage" , reservationsPage);
 
-        List<Restaurant> restaurants = restaurantService.getRestaurantsByUserId(sessionObject.getUser().getId());
-        model.addAttribute("restaurants", restaurants);
         int totalPages = reservationsPage.getTotalPages();
         if(totalPages > 0) {
             List<Integer> pageNumbers =
@@ -151,6 +155,9 @@ public class ReservationController {
         if (currentPage == reservationsPage.getTotalPages()) {
             nextPage = currentPage;
         }
+
+        List<Restaurant> restaurants = restaurantService.getRestaurantsByUserId(sessionObject.getUser().getId());
+        model.addAttribute("restaurants", restaurants);
         model.addAttribute("nextPage", nextPage);
         model.addAttribute("previousPage", previousPage);
         return "restorerReservations";
@@ -160,16 +167,20 @@ public class ReservationController {
     @GetMapping(value="/decline/{id}")
     public String declineReservation(@PathVariable int id) {
         Reservation reservation = this.reservationService.getReservationById(id);
-        reservation.setReservationStatus(ReservationStatus.DECLINED);
-        this.reservationService.persistReservation(reservation);
+        if(reservation != null) {
+            reservation.setReservationStatus(ReservationStatus.DECLINED);
+            this.reservationService.persistReservation(reservation);
+        }
         return "redirect:/restorerReservations";
     }
 
     @GetMapping(value="/accept/{id}")
     public String acceptReservation(@PathVariable int id) {
         Reservation reservation = this.reservationService.getReservationById(id);
-        reservation.setReservationStatus(ReservationStatus.ACCEPTED);
-        this.reservationService.persistReservation(reservation);
+        if(reservation != null) {
+            reservation.setReservationStatus(ReservationStatus.ACCEPTED);
+            this.reservationService.persistReservation(reservation);
+        }
         return "redirect:/restorerReservations";
     }
 

@@ -101,7 +101,10 @@ public class AdminController {
         int totalPages = reservationsPage.getTotalPages();
         if(totalPages > 0) {
             List<Integer> pageNumbers =
-                    IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+                    IntStream.rangeClosed(1, totalPages)
+                            .boxed()
+                            .collect(Collectors.toList());
+
             model.addAttribute("pageNumbers" , pageNumbers);
         }
         if (currentPage > 1) {
@@ -116,7 +119,10 @@ public class AdminController {
     @GetMapping(value="/showUser/{id}")
     public String showInformationsAboutUser(@PathVariable int id, Model model) {
         User user = this.userService.getUserById(id);
-        List<Restaurant> restaurant = this.restaurantService.getRestaurantsByUserId(id);
+        List<Restaurant> restaurant = new ArrayList<>();
+        if (user != null) {
+            restaurant = this.restaurantService.getRestaurantsByUserId(id);
+        }
         model.addAttribute("user", user);
         model.addAttribute("restaurants", restaurant);
         return "showUser";

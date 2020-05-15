@@ -20,7 +20,6 @@ public interface IReservationService {
     boolean doComplexReservationAction(Restaurant restaurant, int guestNumber,
                                     String comments, String reservationStartTime);
     boolean isBlocked(int restaurantId, String startTime);
-
     List<Reservation> getWaitingReservationsForRestaurant(int id);
     List<Reservation> getAcceptedReservationsForRestaurant(int id);
     List<Reservation> getDeclinedReservationsForRestaurant(int id);
