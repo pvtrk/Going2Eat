@@ -71,6 +71,11 @@ public class ReservationServiceImpl implements IReservationService {
     }
 
     @Override
+    public List<Reservation> getFutureReservations() {
+        return reservationDAO.getFutureReservations();
+    }
+
+    @Override
     public List<Reservation> getReservationsForRestorer(User restorer) {
         Session session = sessionFactory.openSession();
         List<Restaurant> restaurants = this.restaurantDAO.getRestaurantsByUserId(restorer.getId());

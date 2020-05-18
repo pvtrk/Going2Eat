@@ -27,7 +27,7 @@
                 <label for="formPromotionDescription">Opis promocji</label>
                 <input type="text" class="form-control" id="formPromotionDescription"
                        placeholder="Opis" th:field="*{promotion.description}"
-                        pattern="^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9_@.\/#&*!+-,\s]{5,150}$" title="Opis może miec do 150 znaków.">
+                        pattern="^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9_@.\/#&*!+\'-,\s]{5,150}$" title="Opis może miec do 150 znaków.">
             </div>
             <div class="form-group">
                 <label for="formPromotionPrice">Cena</label>

@@ -52,4 +52,12 @@ public class BlockadeDAOImpl implements IBlockadeDAO {
         session.close();
         return blockades;
     }
+
+    @Override
+    public List<Blockade> getAllActiveBlockades() {
+        Session session = sessionFactory.openSession();
+        List<Blockade> blockades = session.createQuery("FROM tblockade WHERE active = " + 1).list();
+        session.close();
+        return blockades;
+    }
 }

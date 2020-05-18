@@ -4,6 +4,8 @@ package pl.camp.it.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Entity(name="tpromotion")
 public class Promotion {
     @Id
@@ -78,6 +80,11 @@ public class Promotion {
 
     public void setDistinction(boolean distinction) {
         this.distinction = distinction;
+    }
+
+    public String getStartTimeDisplayValue() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return this.startDate.format(formatter);
     }
 
     public static void autoValidatePromotion(Promotion promotion) {

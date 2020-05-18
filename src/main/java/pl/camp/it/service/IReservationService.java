@@ -16,6 +16,7 @@ public interface IReservationService {
     List<Reservation> getReservationsByUserId(int id);
     List<Reservation> getActiveReservationsForUser(int id);
     List<Reservation> getAllReservations();
+    List<Reservation> getFutureReservations();
     List<Reservation> getReservationsForRestorer(User restorer);
     boolean doComplexReservationAction(Restaurant restaurant, int guestNumber,
                                     String comments, String reservationStartTime);

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import pl.camp.it.dao.IReservationDAO;
 import pl.camp.it.model.Reservation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -66,6 +67,14 @@ public class ReservationDAOImpl implements IReservationDAO {
     public List<Reservation> getActiveReservationsForUser(int id) {
         Session session = sessionFactory.openSession();
         return session.createQuery("FROM treservation WHERE userId = " + id + " AND reservationStatus = " + "'ACTIVE'").list();
+    }
+
+    @Override
+    public List<Reservation> getFutureReservations() {
+        Session session = sessionFactory.openSession();
+        List<Reservation> result = session.createQuery("FROM treservation WHERE past = " + 0).list();
+        session.close();
+        return result;
     }
 
     @Override

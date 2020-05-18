@@ -15,7 +15,6 @@ public class Blockade {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     boolean active;
-    
     public int getId() {
         return id;
     }

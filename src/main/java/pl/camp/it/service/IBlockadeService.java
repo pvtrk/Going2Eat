@@ -9,5 +9,6 @@ public interface IBlockadeService {
     Blockade getBlockadeById(int id);
     List<Blockade> getBlockadesByRestaurantId(int id);
     List<Blockade> getActiveBlockadesForRestaurant(int id);
+    List<Blockade> getAllActiveBlockades();
     boolean createBlockade(int restaurantId, String startDate, String endDate);
 }

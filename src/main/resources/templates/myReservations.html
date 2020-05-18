@@ -34,7 +34,7 @@
                         <span>Status: </span><span th:text="${reservation.ReservationStatus.displayValue}"></span>
                         <form th:unless ="${reservation.reservationStatus == T(pl.camp.it.model.ReservationStatus).CANCELED OR reservation.reservationStatus == T(pl.camp.it.model.ReservationStatus).DECLINED}"
                               th:action="${'/cancel/' + reservation.id}">
-                            <input type="submit" class="btn btn-danger" value="Odwołaj">
+                            <input th:if="${!reservation.Past}" type="submit" class="btn btn-danger" value="Odwołaj">
                         </form>
                     </div>
                 </div>

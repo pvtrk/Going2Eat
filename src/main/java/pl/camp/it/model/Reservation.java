@@ -16,6 +16,7 @@ public class Reservation {
     private int guestsQuantity;
     @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
+    boolean past;
     private String comments;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -23,7 +24,6 @@ public class Reservation {
     public int getId() {
         return id;
     }
-
 
     public int getUserId() {
         return userId;
@@ -97,6 +97,14 @@ public class Reservation {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public boolean isPast() {
+        return past;
+    }
+
+    public void setPast(boolean past) {
+        this.past = past;
     }
 
     public static void autoValidateReservation(Reservation reservation) {

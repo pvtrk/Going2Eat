@@ -10,4 +10,5 @@ public interface IBlockadeDAO {
     Blockade getBlockadeById(int id);
     List<Blockade> getBlockadesByRestaurantId(int id);
     List<Blockade> getActiveBlockadesForRestaurant(int id);
+    List<Blockade> getAllActiveBlockades();
 }

@@ -50,6 +50,11 @@ public class PromotionServiceImpl implements IPromotionService {
     }
 
     @Override
+    public List<Promotion> getAllPromotions() {
+        return promotionDAO.getAllPromotions();
+    }
+
+    @Override
     public boolean createPromotion(Promotion promotion, String date1, String date2) {
         if(validatePromotionInput(promotion)) {
             promotion.setStatus(PromotionStatus.ACTIVE);

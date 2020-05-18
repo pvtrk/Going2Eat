@@ -43,6 +43,11 @@ public class BlockadeServiceImpl implements IBlockadeService {
     }
 
     @Override
+    public List<Blockade> getAllActiveBlockades() {
+        return blockadeDAO.getAllActiveBlockades();
+    }
+
+    @Override
     public boolean createBlockade(int restaurantId, String startDate, String endDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         Blockade blck = new Blockade();

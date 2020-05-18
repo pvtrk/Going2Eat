@@ -10,5 +10,6 @@ public interface IPromotionService {
     List<Promotion> getPromotionsSortedByDate();
     List<Promotion> getDistinctedPromotions();
     List<Promotion> getPromotionsByRestaurantId(int id);
+    List<Promotion> getAllPromotions();
     boolean createPromotion(Promotion promotion, String startDate, String endDate);
 }
