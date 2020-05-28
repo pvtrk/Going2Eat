@@ -1,11 +1,13 @@
 package pl.camp.it.configuration;
 
+import org.hibernate.SessionFactory;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.annotation.SessionScope;
 import pl.camp.it.dao.*;
+import pl.camp.it.service.IImageService;
 import pl.camp.it.session.SessionObject;
 import pl.camp.it.utils.RegexChecker;
 
@@ -17,6 +19,11 @@ public class AppConfigurationTest {
     @SessionScope
     public SessionObject sessionObject(){
         return new SessionObject();
+    }
+
+    @Bean
+    public SessionFactory sessionFactory() {
+        return Mockito.mock(SessionFactory.class);
     }
 
     @Bean
@@ -38,6 +45,11 @@ public class AppConfigurationTest {
     @Bean
     public IPromotionDAO promotionDAO() {
         return Mockito.mock(IPromotionDAO.class);
+    }
+
+    @Bean
+    IImageDAO imageDAO() {
+        return Mockito.mock(IImageDAO.class);
     }
 
     @Bean

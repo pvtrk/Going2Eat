@@ -114,7 +114,9 @@ public class ReservationServiceImpl implements IReservationService {
     @Override
     public boolean doComplexReservationAction(Restaurant restaurant, int guestsNumber,
                                            String comments, String reservationStartTime) {
-
+        if (restaurant == null) {
+            return false;
+        }
         LocalDateTime startTime = parseStringToDate(reservationStartTime);
 
         int freePlaces = (restaurant.getPlaces()) -
@@ -189,14 +191,16 @@ public class ReservationServiceImpl implements IReservationService {
 
     private void createReservation(Restaurant restaurant, int guestNumber,
                                    String comments, LocalDateTime startTime) {
-        Reservation reservation = new Reservation();
-        reservation.setUserId(sessionObject.getUser().getId());
-        reservation.setRestaurant(restaurant);
-        reservation.setGuestsQuantity(guestNumber);
-        reservation.setReservationStatus(ReservationStatus.WAITING);
-        reservation.setComments(comments);
-        reservation.setStartTime(startTime);
-        reservation.setEndTime(startTime.plusHours(2));
-        this.reservationService.persistReservation(reservation);
+        if (sessionObject.getUser() != null) {
+            Reservation reservation = new Reservation();
+            reservation.setUserId(sessionObject.getUser().getId());
+            reservation.setRestaurant(restaurant);
+            reservation.setGuestsQuantity(guestNumber);
+            reservation.setReservationStatus(ReservationStatus.WAITING);
+            reservation.setComments(comments);
+            reservation.setStartTime(startTime);
+            reservation.setEndTime(startTime.plusHours(2));
+            this.reservationService.persistReservation(reservation);
+        }
     }
 }

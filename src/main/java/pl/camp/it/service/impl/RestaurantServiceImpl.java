@@ -114,5 +114,10 @@ public class RestaurantServiceImpl implements IRestaurantService {
 
     }
 
+    @Override
+    public List<Restaurant> getAllOtherRestaurantsForRestorer(int userId) {
+       return restaurantDAO.getAllOtherRestaurantsForRestorer(userId);
+    }
+
 
 }

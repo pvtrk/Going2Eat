@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Going2Eat</title>
+    <link rel="stylesheet" type="text/css" href="../css/main2.css" th:href="@{../css/main2.css}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<div th:replace="restorerFragments.html :: menu"></div>
+
+<div class="container">
+
+    <div th:replace="logoFragment.html :: logo"></div>
+    <div id="content">
+        <div th:if="${result}" th:text="${result}"></div>
+        <div class="form-group">
+            <form method="POST" th:action="${'/uploadFile/' + restaurant.id}" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" /><br/>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="profilePicture" th:field="*{image.profilePicture}" id="defaultCheck">
+                    <label class="form-check-label" for="defaultCheck">
+                        Zdjęcie profilowe
+                    </label></br>
+                </div>
+                <div class ="form-check">
+                    <input class="form-check-input" type="checkbox" name="menu" th:field="*{image.menu}" th:value="${true}" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        Menu
+                    </label></br>
+                </div>
+                <input type="submit" value="Zatwierdź" />
+            </form>
+        </div>
+    </div>
+
+
+</div>
+<footer th:replace="footer.html :: footer" style="position:absolute; text-align: center; bottom:0; height: 60px; width: 100%;" ></footer>
+</body>
+</html>

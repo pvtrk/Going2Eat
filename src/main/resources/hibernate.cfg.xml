@@ -34,5 +34,6 @@
         <mapping class="pl.camp.it.model.Reservation"/>
         <mapping class="pl.camp.it.model.Promotion"/>
         <mapping class="pl.camp.it.model.Blockade"/>
+        <mapping class="pl.camp.it.model.Image"/>
     </session-factory>
 </hibernate-configuration>

@@ -24,19 +24,28 @@
 
             <div class="card" th:each="restaurant : ${favRestPage.content}">
                 <div class="card-header">
-                    <a class="card-link" data-toggle="collapse" href="#collapseOne" th:text="${restaurant.name}" style="color:#000;">
+                    <a class="card-link" data-toggle="collapse" th:href="${'/moreInfo' + restaurant.Id}" th:text="${restaurant.name}" style="color:#000;">
                     </a>
                 </div>
                 <div id="collapseOne" class="collapse show" data-parent="#accordion">
                     <div class="card-body">
-                        <span>Kuchnia: </span><span th:text="${restaurant.cuisineType}"></span><br>
-                        <span th:text="${restaurant.description}"></span>
-                        <form th:action="${'/makeReservation/' + restaurant.id}">
-                            <input type="submit" class="btn btn-primary" value="Zarezerwuj">
-                        </form>
-                        <form th:action="${'/moreInfo/' + restaurant.id}">
-                            <input type="submit" class="btn btn-primary" value="Więcej">
-                        </form>
+                        <div class = "row">
+                            <div class="col-lg-6 col-md-6 col-6">
+                                <a th:href="${'/moreInfo/' + restaurant.id}" class="d-block mb-4 h-100">
+                                    <img class="img-fluid img-thumbnail" th:if="${restaurant.profilePicture}" th:src="${restaurant.profilePicture.url}" alt="profile picture">
+                                </a>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-6">
+                                <span>Kuchnia: </span><span th:text="${restaurant.cuisineType}"></span><br>
+                                <span th:text="${restaurant.description}"></span>
+                                <form th:action="${'/makeReservation/' + restaurant.id}">
+                                    <input type="submit" class="btn btn-primary" value="Zarezerwuj">
+                                </form>
+                                <form th:action="${'/moreInfo/' + restaurant.id}">
+                                    <input type="submit" class="btn btn-primary" value="Więcej">
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

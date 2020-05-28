@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Going2Eat</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/restaurant.css}">
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<div th:replace="fragments.html :: menu"></div>
+
+<div class="container">
+
+    <div th:replace="logoFragment.html :: logo"></div>
+
+    <div id="row">
+            <div class="col-6" th:each="restaurant : ${restaurantPage.content}">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#collapseOne" th:text="${restaurant.name}" style="color:#000;">
+                    </a>
+                </div>
+                <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                    <div class="card-body">
+                        <span>Kuchnia: </span><span th:text="${restaurant.cuisineType}"></span>
+                        <form th:action="${'/makeReservation/' + restaurant.id}">
+                            <input type="submit" class="btn btn-primary" value="Zarezerwuj">
+                        </form>
+                        <form th:action="${'/addToFavourite/' + restaurant.id}">
+                            <input type="submit" class="btn btn-primary" value="Dodaj do ulubionych">
+                        </form>
+                        <form th:action="${'/moreInfo/' + restaurant.id}">
+                            <input type="submit" class="btn btn-primary" value="Więcej">
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </div>
+        <nav aria-label="Page navigation" th:if="${restaurantPage.totalPages > 1}">
+            <ul class="pagination">
+                <li class="page-item" >
+                    <a class="page-link" th:href="@{/restaurants(size=${restaurantPage.size}, page=${previousPage})}">&laquo;</a>
+                </li>
+                <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                    <a class="page-link" th:href="@{/restaurants(size=${restaurantPage.size}, page=${pageNumber})}"
+                       th:text="${pageNumber}"
+                       th:classappend="${pageNumber==restaurantPage.number + 1} ? active"></a>
+                </li>
+                <li class="page-item"><a class="page-link" th:href="@{/restaurants(size=${restaurantPage.size}, page=${nextPage})}">&raquo;</a></li>
+            </ul>
+        </nav>
+    </div>
+<div th:replace="footer.html :: footer"></div>
+</body>
+</html>

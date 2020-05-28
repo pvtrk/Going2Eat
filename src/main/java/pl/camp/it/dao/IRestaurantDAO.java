@@ -13,5 +13,6 @@ public interface IRestaurantDAO {
     void addFavouriteRestaurant(int userId, int restaurantId);
     List<Restaurant> getFavouriteRestaurants(int userId);
     List<Restaurant> getActiveRestaurants();
+    List<Restaurant> getAllOtherRestaurantsForRestorer(int userId);
 
 }

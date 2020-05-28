@@ -18,4 +18,5 @@ public interface IRestaurantService {
     List<Restaurant> getActiveRestaurants();
     boolean validateRestaurantInput(Restaurant restaurant);
     void deleteRestaurantsPromotionsAndReservations(Restaurant restaurant);
+    List<Restaurant> getAllOtherRestaurantsForRestorer(int userId);
 }

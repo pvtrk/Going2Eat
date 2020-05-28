@@ -77,6 +77,18 @@
             <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>1.11.133</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/jmimemagic/jmimemagic -->
+        <dependency>
+            <groupId>jmimemagic</groupId>
+            <artifactId>jmimemagic</artifactId>
+            <version>0.1.2</version>
+        </dependency>
+
     </dependencies>
     <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
 

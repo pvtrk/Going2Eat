@@ -72,7 +72,7 @@ public class PromotionServiceImpl implements IPromotionService {
         if (promotion != null) {
             if ((promotion.getDescription() != null) &&
                     regexChecker.checkInput(promotion.getDescription(), regexChecker.getDescriptionRegex())) {
-                if ((promotion.getPrice() != 0) && (promotion.getPrice() > 0 && promotion.getPrice() <= 999)) {
+                if (promotion.getPrice() > 0 && promotion.getPrice() <= 999) {
                     if (promotion.getRestaurant() != null) {
                         return true;
                     }

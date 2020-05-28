@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <title>Going2Eat</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
+    <link rel="stylesheet" type="text/css" href="../css/main2.css" th:href="@{../css/main2.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/restaurant.css}">
 </head>
 <body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 <div th:replace="fragments.html :: menu"></div>
 <div class="container">
-
 
 
     <div th:replace="logoFragment.html :: logo"></div>
@@ -40,9 +40,21 @@
                 </div>
             </div>
         </div>
+
+
+    <div class="row text-center text-lg-left">
+
+        <div class="col-lg-3 col-md-4 col-6" th:each="image : ${images}">
+            <a th:href="${image.url}" class="d-block mb-4 h-100">
+                <img class="img-fluid img-thumbnail" th:src="${image.url}" alt="">
+            </a>
+        </div>
+
     </div>
 
 </div>
+</div>
+
 <div th:replace="footer.html :: footer"></div>
 </body>
 </html>

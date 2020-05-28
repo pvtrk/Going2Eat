@@ -61,6 +61,9 @@
                               th:action="${'/unblockReservations/' + restaurant.id}">
                             <input type="submit" class="btn btn-primary" value="Odblokuj rezerwacje">
                         </form>
+                        <form th:action="${'/uploadFile/' + restaurant.id}">
+                            <input type="submit" class="btn" value="Dodaj zdjęcie">
+                        </form>
 
                     </div>
                 </div>

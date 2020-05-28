@@ -34,7 +34,7 @@ public class AppConfiguration {
                 "/restorerAllRestaurants/*" , "/addRestaurant/*" , "/addPromotion/*" ,
                 "/blockReservations/*" , "/unblockReservations/*" , "/unblck/*", "/myRestaurants/*" , "/restorerMoreInfo/*",
                 "/accept/*", "/decline/*", "/block/*", "/unblock/*", "/delete/*", "/deletePromotion/*", "/blckRest/*",
-                "/unblckRest/*");
+                "/unblckRest/*", "/uploadFile/*", "/moreInfoRestorer/*");
 
         return registrationBean;
     }

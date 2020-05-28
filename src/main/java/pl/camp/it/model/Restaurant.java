@@ -1,15 +1,14 @@
 package pl.camp.it.model;
 
 
-import org.hibernate.annotations.Fetch;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Entity(name="trestaurant")
 public class Restaurant {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -28,6 +27,12 @@ public class Restaurant {
     private List<Blockade> blockades;
     @OneToMany(mappedBy = "restaurant")
     private List<Reservation> reservations;
+    @OneToMany(mappedBy = "restaurant" , fetch = FetchType.EAGER)
+    private List<Image> images;
+    @Transient
+    private Image profilePicture;
+
+
 
 
     public int getId() {
@@ -125,6 +130,26 @@ public class Restaurant {
 
     public void setBlockades(List<Blockade> blockades) {
         this.blockades = blockades;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+    
+    public Image getProfilePicture() {
+        Optional<Image> result = this.getImages().stream().filter(x -> x.isProfilePicture()).findFirst();
+        if (result.isPresent()) {
+            return result.get();
+        }
+        return null;
+    }
+
+    public void setProfilePicture(Image profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public static void autoValidateRestaurant(Restaurant restaurant) {

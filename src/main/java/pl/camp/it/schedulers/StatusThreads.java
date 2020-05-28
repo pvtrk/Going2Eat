@@ -3,10 +3,7 @@ package pl.camp.it.schedulers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import pl.camp.it.model.Blockade;
-import pl.camp.it.model.Promotion;
-import pl.camp.it.model.PromotionStatus;
-import pl.camp.it.model.Reservation;
+import pl.camp.it.model.*;
 import pl.camp.it.service.IBlockadeService;
 import pl.camp.it.service.IPromotionService;
 import pl.camp.it.service.IReservationService;
@@ -16,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
-public class ReservationsStatusThread {
+public class StatusThreads {
     @Autowired
     IReservationService reservationService;
     @Autowired
@@ -32,6 +29,7 @@ public class ReservationsStatusThread {
                 .filter(x -> x.getStartTime().isBefore(LocalDateTime.now()))
                 .forEach(x -> {
                     x.setPast(true);
+                    x.setReservationStatus(ReservationStatus.PAST);
                     reservationService.persistReservation(x);
                 });
 

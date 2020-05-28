@@ -92,4 +92,12 @@ public class RestaurantDAOImpl implements IRestaurantDAO {
         session.close();
         return restaurants;
     }
+
+    @Override
+    public List<Restaurant> getAllOtherRestaurantsForRestorer(int userId) {
+        Session session = sessionFactory.openSession();
+        List<Restaurant> restaurants = session.createQuery("FROM trestaurant WHERE NOT userId = " + userId + "AND restaurantStatus = 'ACTIVE'").list();
+        session.close();
+        return restaurants;
+    }
 }

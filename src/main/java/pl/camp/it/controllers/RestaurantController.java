@@ -6,13 +6,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.camp.it.model.Image;
 import pl.camp.it.model.Restaurant;
 import pl.camp.it.model.RestaurantStatus;
+import pl.camp.it.model.User;
+import pl.camp.it.service.IImageService;
 import pl.camp.it.service.IRestaurantService;
-import pl.camp.it.service.IUserService;
 import pl.camp.it.service.impl.PageService;
 import pl.camp.it.session.SessionObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,6 +27,8 @@ public class RestaurantController {
     PageService pageService;
     @Autowired
     IRestaurantService restaurantService;
+    @Autowired
+    IImageService imageService;
     @Autowired
     SessionObject sessionObject;
 
@@ -63,7 +68,11 @@ public class RestaurantController {
     @GetMapping(value="/moreInfo/{id}")
     public String moreInfoAboutRestaurant(@PathVariable int id, Model model) {
         Restaurant restaurant = restaurantService.getRestaurantById(id);
-        model.addAttribute("restaurant", restaurant);
+        if (restaurant != null) {
+            List<Image> images = imageService.getImagesForRestaurant(restaurant.getId());
+            model.addAttribute("restaurant", restaurant);
+            model.addAttribute("images", images);
+        }
         return "moreInfo";
     }
     @GetMapping(value="/addToFavourite/{id}")
@@ -171,8 +180,13 @@ public class RestaurantController {
         int pageSize = size.orElse(10);
         int previousPage = 1;
         int nextPage = currentPage + 1;
+        User user = new User();
+        List<Restaurant> restaurantList = new ArrayList<>();
+        if(sessionObject.getUser() != null) {
+            user = sessionObject.getUser();
+            restaurantList = restaurantService.getAllOtherRestaurantsForRestorer(sessionObject.getUser().getId());
 
-        List<Restaurant> restaurantList = restaurantService.getActiveRestaurants();
+        }
         Page<Restaurant> restaurantPage = pageService.findPaginated
                 (PageRequest.of(currentPage - 1, pageSize), restaurantList);
         // Page<Restaurant> restaurantPage = restaurantService.findPaginated
@@ -195,6 +209,17 @@ public class RestaurantController {
         model.addAttribute("previousPage", previousPage);
 
         return "restorerAllRestaurants";
+    }
+
+    @GetMapping(value="/moreInfoRestorer/{id}")
+    public String moreInfoAboutRestaurantForRestorer(@PathVariable int id, Model model) {
+        Restaurant restaurant = restaurantService.getRestaurantById(id);
+        if (restaurant != null) {
+            List<Image> images = imageService.getImagesForRestaurant(restaurant.getId());
+            model.addAttribute("restaurant", restaurant);
+            model.addAttribute("images", images);
+        }
+        return "moreInfoRestorer";
     }
 
     @GetMapping (value = "/restorerMoreInfo/{id}")

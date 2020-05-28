@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Going2Eat</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
+    <link rel="stylesheet" href="../css/main2.css" th:href="@{../css/main2.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/restaurant.css}">
 </head>
 <body>
@@ -20,29 +20,40 @@
 
     <div id="content">
 
-        <div id="accordion">
 
-            <div class="card" th:each="restaurant : ${restaurantPage.content}">
-                <div class="card-header">
-                    <a class="card-link" data-toggle="collapse" href="#collapseOne" th:text="${restaurant.name}" style="color:#000;">
-                    </a>
-                </div>
-                <div id="collapseOne" class="collapse show" data-parent="#accordion">
-                    <div class="card-body">
-                        <span>Kuchnia: </span><span th:text="${restaurant.cuisineType}"></span>
-                        <form th:action="${'/makeReservation/' + restaurant.id}">
-                            <input type="submit" class="btn btn-primary" value="Zarezerwuj">
-                        </form>
-                        <form th:action="${'/addToFavourite/' + restaurant.id}">
-                            <input type="submit" class="btn btn-primary" value="Dodaj do ulubionych">
-                        </form>
-                        <form th:action="${'/moreInfo/' + restaurant.id}">
-                            <input type="submit" class="btn btn-primary" value="Więcej">
-                        </form>
+        <div class="row" style="margin-right: 15px; margin-left: 15px;">
+            <div class="col-lg-6 col-md-6 col-6" id="restaurant-card" style="padding:0px;" th:each="restaurant : ${restaurantPage.content}">
+                <div class="card">
+                    <div class="card-header" th:text="${restaurant.name}">
+                    </div>
+                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row text-center text-lg-left">
+                                <div class="col-lg-6 col-md-6 col-6">
+                                    <a th:href="${'/moreInfo/' + restaurant.id}" class="d-block mb-4 h-100">
+                                        <img class="img-fluid img-thumbnail" th:if="${restaurant.profilePicture}" th:src="${restaurant.profilePicture.url}" alt="profile picture">
+                                    </a>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-6">
+                                    <span>Kuchnia: </span><span th:text="${restaurant.cuisineType}"></span>
+                                    <form th:action="${'/makeReservation/' + restaurant.id}">
+                                        <input type="submit" class="btn btn-primary" value="Zarezerwuj">
+                                    </form>
+                                    <form th:action="${'/addToFavourite/' + restaurant.id}">
+                                        <input type="submit" class="btn btn-primary" value="Dodaj do ulubionych">
+                                    </form>
+                                    <form th:action="${'/moreInfo/' + restaurant.id}">
+                                        <input type="submit" class="btn btn-primary" value="Więcej">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
         <nav aria-label="Page navigation" th:if="${restaurantPage.totalPages > 1}">
             <ul class="pagination">
                 <li class="page-item" >
@@ -50,13 +61,13 @@
                 </li>
                 <li class="page-item" th:each="pageNumber : ${pageNumbers}">
                     <a class="page-link" th:href="@{/restaurants(size=${restaurantPage.size}, page=${pageNumber})}"
-                    th:text="${pageNumber}"
-                    th:classappend="${pageNumber==restaurantPage.number + 1} ? active"></a>
+                       th:text="${pageNumber}"
+                       th:classappend="${pageNumber==restaurantPage.number + 1} ? active"></a>
                 </li>
                 <li class="page-item"><a class="page-link" th:href="@{/restaurants(size=${restaurantPage.size}, page=${nextPage})}">&raquo;</a></li>
             </ul>
         </nav>
-</div>
+    </div>
 </div>
 <div th:replace="footer.html :: footer"></div>
 </body>
