@@ -3,7 +3,6 @@ package pl.camp.it.dao.impl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.camp.it.dao.IImageDAO;
@@ -35,7 +34,8 @@ public class ImageDAOImpl implements IImageDAO {
     @Override
     public List<Image> getImagesForRestaurant(int restaurantId) {
         Session session = sessionFactory.openSession();
-        List<Image> images = session.createQuery("FROM timage WHERE restaurantId = " + restaurantId)
+        List<Image> images = session.createQuery("FROM timage WHERE restaurantId = "
+                + restaurantId + "AND active = " + 1 + "AND menu = " + 0)
                 .list();
         session.close();
         return images;
@@ -45,9 +45,20 @@ public class ImageDAOImpl implements IImageDAO {
     public Image getProfilePictureForRestaurant(int restaurantId) {
         Session session = sessionFactory.openSession();
         Image image = session
-                .createQuery("FROM timage WHERE restaurantId = " + restaurantId + " AND profilePicture = " + 1, Image.class)
+                .createQuery("FROM timage WHERE restaurantId = "
+                        + restaurantId + " AND profilePicture = " + 1 + "AND active = " + 1, Image.class)
                 .uniqueResult();
         session.close();
         return image;
+    }
+
+    @Override
+    public List<Image> getMenuForRestaurant(int restaurantId) {
+        Session session = sessionFactory.openSession();
+        List<Image> images = session
+                .createQuery("FROM timage WHERE restaurantId = "
+                        + restaurantId + "AND menu = " + 1 + "AND active = " + 1).list();
+        session.close();
+        return images;
     }
 }

@@ -46,7 +46,8 @@ public class AppConfiguration {
 
         registrationBean.setFilter(new UserFilter());
         registrationBean.addUrlPatterns("/main", "/", "/index" , "/restaurants", "/promotions/*",
-                "/myFavourite/*" , "/myReservations/*", "/addToFavourite/*" , "/makeReservation/*" , "/moreInfo/*");
+                "/myFavourite/*" , "/myReservations/*", "/addToFavourite/*"
+                , "/makeReservation/*" , "/moreInfo/*", "/menu/*");
 
         return registrationBean;
     }

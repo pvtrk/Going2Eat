@@ -10,4 +10,5 @@ public interface IImageService {
     List<Image> getImagesForRestaurant(int restaurantId);
     Image getProfilePictureForRestaurant(int restaurantId);
     String saveImageInput(MultipartFile file, int id, Image image);
+    List<Image> getRestaurantsMenu(int restaurantId);
 }

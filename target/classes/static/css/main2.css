@@ -80,3 +80,17 @@ body {
     padding:0px;
 }
 
+#rest-img {
+    max-height: 200px;
+    width: auto;
+}
+
+.card {
+    height: 100%;
+}
+
+.img-thumbnail {
+    max-height: 200px;
+    width: auto;
+}
+

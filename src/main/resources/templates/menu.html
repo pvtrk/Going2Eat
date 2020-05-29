@@ -45,17 +45,17 @@
         </div>
 
 
-    <div class="row text-center text-lg-left">
+        <div class="row text-center text-lg-left">
 
-        <div class="col-lg-3 col-md-4 col-6" th:each="image : ${images}">
-            <a th:href="${image.url}" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" th:src="${image.url}" alt="">
-            </a>
+            <div class="col-lg-3 col-md-4 col-6" th:each="image : ${images}">
+                <a th:href="${image.url}" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" th:src="${image.url}" alt="">
+                </a>
+            </div>
+
         </div>
 
     </div>
-
-</div>
 </div>
 
 <div th:replace="footer.html :: footer"></div>

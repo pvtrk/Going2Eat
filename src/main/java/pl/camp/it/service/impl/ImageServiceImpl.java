@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.camp.it.dao.IImageDAO;
-import pl.camp.it.dao.IRestaurantDAO;
 import pl.camp.it.model.Image;
 import pl.camp.it.model.Restaurant;
 import pl.camp.it.service.IImageService;
@@ -62,7 +61,15 @@ public class ImageServiceImpl implements IImageService {
                     Restaurant restaurant = restaurantService.getRestaurantById(id);
                     if(restaurant != null) {
                         image.setRestaurant(restaurant);
+                        if(image.isProfilePicture() == true) {
+                            Image img = imageDAO.getProfilePictureForRestaurant(restaurant.getId());
+                                if (img != null) {
+                                    img.setProfilePicture(false);
+                                    persistImage(img);
+                                }
+                        }
                     }
+                    image.setActive(true);
                     persistImage(image);
                     return "Udało Ci się dodać zdjęcie";
                 }
@@ -76,5 +83,10 @@ public class ImageServiceImpl implements IImageService {
                 e.printStackTrace();
             }
         } return "Nie udało się dodać zdjęcia";
+    }
+
+    @Override
+    public List<Image> getRestaurantsMenu(int restaurantId) {
+        return imageDAO.getMenuForRestaurant(restaurantId);
     }
 }

@@ -75,6 +75,17 @@ public class RestaurantController {
         }
         return "moreInfo";
     }
+
+    @GetMapping(value="/menu/{id}")
+    public String showRestaurantsMenu(@PathVariable int id, Model model) {
+        Restaurant restaurant = restaurantService.getRestaurantById(id);
+        if(restaurant != null) {
+            List<Image> images = imageService.getRestaurantsMenu(id);
+            model.addAttribute("restaurant", restaurant);
+            model.addAttribute("images", images);
+        }
+        return "moreInfo";
+    }
     @GetMapping(value="/addToFavourite/{id}")
     public String addRestaurantToFavourites(@PathVariable int id) {
         if(!this.restaurantService.isAlreadyFavourite(id)) {

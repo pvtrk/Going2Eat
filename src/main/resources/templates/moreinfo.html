@@ -36,6 +36,9 @@
                         <form th:action="${'/promotions/' + restaurant.id}">
                             <input type="submit" class="btn btn-primary" value="Promocje">
                         </form>
+                        <a th:href="${'/menu/'+ restaurant.id}">
+                            <input type="submit" class="btn btn-primary" value="Menu">
+                        </a>
                     </div>
                 </div>
             </div>
