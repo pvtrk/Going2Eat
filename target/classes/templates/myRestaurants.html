@@ -21,53 +21,59 @@
 
     <div id="content">
 
+        <div class="row" style="margin-right: 15px; margin-left: 15px;">
         <div id="accordion">
 
-            <div class="card" th:each="restaurant : ${restaurantPage.content}">
+            <div class="card col" style="padding:0px;" th:each="restaurant : ${restaurantPage.content}">
                 <div class="card-header">
                     <a class="card-link" data-toggle="collapse" href="#collapseOne" th:text="${restaurant.name}" style="color:#000;">
                     </a>
                 </div>
                 <div id="collapseOne" class="collapse show" data-parent="#accordion">
                     <div class="card-body">
-                        <span>Kuchnia: </span><span th:text="${restaurant.cuisineType}"></span><br>
                         <span>Status: </span><span th:text="${restaurant.restaurantStatus.displayValue}"></span><br>
 
-                        <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
+                        <form class ="d-inline" th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
                               th:action="${'/blckRest/' + restaurant.id}" method="get">
-                            <input type="submit" class="btn btn-danger" value="Usuń"> <span>Funkcja automatycznie usuwa wszystkie promocje i anuluje rezerwacje nieodwracalnie.</span>
+                            <input type="submit" class="btn btn-light" value="Usuń restaurację">
                         </form>
 
-                        <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).OFF}"
+                        <form class ="d-inline" th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).OFF}"
                               th:action="${'/unblckRest/' + restaurant.id}">
-                            <input type="submit" class="btn btn-success" value="Odblokuj">
+                            <input type="submit" class="btn btn-light" value="Odblokuj">
                         </form>
 
-                        <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
+                        <form class ="d-inline" th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
                               th:action="${'/addPromotion/' + restaurant.id}">
-                            <input type="submit" class="btn btn-primary" value="Dodaj promocję">
+                            <input type="submit" class="btn btn-light" value="Dodaj promocję">
                         </form>
 
-                        <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
+                        <form class ="d-inline" th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
                               th:action="${'/deletePromotion/' + restaurant.id}">
-                            <input type="submit" class="btn btn-primary" value="Usuń promocję">
+                            <input type="submit" class="btn btn-light" value="Usuń promocję">
                         </form>
 
-                        <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
+                        <form class ="d-inline" th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
                               th:action="${'/blockReservations/' + restaurant.id}">
-                            <input type="submit" class="btn btn-primary" value="Zablokuj rezerwacje">
+                            <input type="submit" class="btn btn-light" value="Zablokuj rezerwacje">
                         </form>
-                        <form th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
+                        <form class ="d-inline" th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
                               th:action="${'/unblockReservations/' + restaurant.id}">
-                            <input type="submit" class="btn btn-primary" value="Odblokuj rezerwacje">
+                            <input type="submit" class="btn btn-light" value="Odblokuj rezerwacje">
                         </form>
-                        <form th:action="${'/uploadFile/' + restaurant.id}">
-                            <input type="submit" class="btn" value="Dodaj zdjęcie">
+                        <form class ="d-inline" th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
+                                th:action="${'/uploadFile/' + restaurant.id}">
+                            <input type="submit" class="btn btn-light" value="Dodaj zdjęcie">
+                        </form>
+                        <form class ="d-inline" th:if="${restaurant.restaurantStatus == T(pl.camp.it.model.RestaurantStatus).ACTIVE}"
+                              th:action="${'/deleteImage/' + restaurant.id}">
+                            <input type="submit" class="btn btn-light" value="Usuń zdjęcia">
                         </form>
 
                     </div>
                 </div>
             </div>
+        </div>
         </div>
         <nav aria-label="Page navigation" th:if="${restaurantPage.totalPages > 1}">
             <ul class="pagination">

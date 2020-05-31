@@ -45,6 +45,11 @@ public class ImageServiceImpl implements IImageService {
     }
 
     @Override
+    public Image getImageById(int imageId) {
+        return imageDAO.getImageById(imageId);
+    }
+
+    @Override
     public String saveImageInput(MultipartFile file, int id, Image image) {
         File inputFile = null;
         try {

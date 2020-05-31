@@ -9,6 +9,7 @@ public interface IImageService {
     void persistImage (Image image);
     List<Image> getImagesForRestaurant(int restaurantId);
     Image getProfilePictureForRestaurant(int restaurantId);
+    Image getImageById(int imageId);
     String saveImageInput(MultipartFile file, int id, Image image);
     List<Image> getRestaurantsMenu(int restaurantId);
 }

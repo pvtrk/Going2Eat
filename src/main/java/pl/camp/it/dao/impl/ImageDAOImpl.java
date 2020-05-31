@@ -53,6 +53,15 @@ public class ImageDAOImpl implements IImageDAO {
     }
 
     @Override
+    public Image getImageById(int imageId) {
+        Session session = sessionFactory.openSession();
+        Image image = session
+                .createQuery("FROM timage WHERE id = " + imageId, Image.class).uniqueResult();
+        session.close();
+        return image;
+    }
+
+    @Override
     public List<Image> getMenuForRestaurant(int restaurantId) {
         Session session = sessionFactory.openSession();
         List<Image> images = session
