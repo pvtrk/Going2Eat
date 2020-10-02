@@ -24,8 +24,8 @@ public class AmazonClient {
     private AmazonS3 s3client;
     private final static String ENDPOINT_URL = "https://s3.us-east-1.amazonaws.com";
     private final static String BUCKET_NAME = "going2eatimages";
-    private final static String ACCESS_KEY = "AKIATHDQ4ADF4WWQD6EF";
-    private final static String SECRET_KEY = "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";
+    private final static String ACCESS_KEY = "";
+    private final static String SECRET_KEY = "";
 
     @PostConstruct
     private void initializeAmazon() {
